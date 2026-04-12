@@ -62,7 +62,7 @@ pnpm dev
 | `lint`        | Lint TypeScript files using ESLint                                           |
 | `lint:fix`    | Fix linting issues in TypeScript files using ESLint                          |
 | `format`      | Format `.ts`, `.tsx`, and `.json` files using Prettier                       |
-| `test`        | Run Jest tests                                                               |
+| `staged`        | Run through all tests, check for typescript errors across all files with compiler. This runs automatically when trying to commit  tests                                                               |
 | `release`     | Run `standard-version` for versioning                                        |
 | `commit`      | Use `git-cz` for commits                                                     |
 | `prepare`     | Set up Husky for git hooks in a production environment                       |
@@ -95,23 +95,3 @@ Here's a basic overview of the significant folders in the boilerplate:
 | `store`     | Zustand stores for state management.                                                                  |
 | `types`     | Shared TypeScript types and interfaces.                                                               |
 | **`public/`**   | Contains static assets like images, fonts, and the entry HTML file. Assets in this directory are served directly and are not processed by bundlers like Vite. |
-
-### Features Folder Structure
-
-The `src/features` directory is organized by feature/domain. Each feature contains its own:
-- `pages/`: Page components for that feature (used in routing)
-- `hooks/`: Feature-specific hooks
-- `services/`: API calls and business logic for the feature
-- `types/`: TypeScript types/interfaces for the feature
-- (optionally) `validation/`, `test/`, etc. for feature-specific logic
-
-Example:
-
-```
-src/features/articles/
-  ├── hooks/
-  ├── pages/
-  ├── services/
-  └── types/
-```
-

@@ -1,15 +1,26 @@
-# Description
+# What does this PR do?
 
-Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
+Overview
 
-Fixes # (issue)
+## Description of Task to be completed?
 
-## Type of change
+Describe the solution here / List what was done
 
-Please delete options that are not relevant.
+## How should this be manually tested?
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
-- [ ] Other
+Small description with steps:
+
+1. Do this.
+2. Then do this...
+
+## Screenshots/Screen records (if appropriate)
+
+Screenshots or screencast that you have followed your own manual testing steps.
+
+## Link to Story
+
+Fill the link to story on Jira
+
+## Any background context you want to provide?
+
+information

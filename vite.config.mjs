@@ -10,5 +10,10 @@ export default defineConfig({
   css: {
     devSourcemap: true,
   },
+    test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.ts",
+  },
   plugins: [react(), tsconfigPaths(), tailwindcss(), VitePWA(PWAConfig)],
 });
