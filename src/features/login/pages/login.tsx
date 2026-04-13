@@ -1,8 +1,7 @@
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Button from '@/components/ui/button';
-import Input from '@/components/ui/input';
+import { Button, Input } from '@/components';
 import { loginSchema } from '../validation/login-schema';
 import useAuthStore from '@/store/auth-store';
 import { type LoginBody } from '../types/auth';
@@ -36,8 +35,8 @@ export default function LoginPage() {
     >
       <p className="text-center text-sm mb-2">Username: user</p>
       <p className="text-center text-sm mb-3">Password: user</p>
-      <Input
-        errors={errors}
+      {/* <Input
+        onError={errors}
         placeholder="Username"
         label="Username"
         id="username"
@@ -45,14 +44,17 @@ export default function LoginPage() {
         name="username"
       />
       <Input
+      
         errors={errors}
         placeholder="Password"
         label="Password"
         type="password"
         register={register}
         name="password"
-      />
-      <Button text="Login" type="submit" isLoading={mutation.isPending} />
+      /> */}
+      <Button type="submit">
+        Login
+      </Button>
     </form>
   );
 }

@@ -1,4 +1,4 @@
-import Button from '@/components/ui/button';
+import { Button } from '@/components';
 import useAuthStore from '@/store/auth-store';
 
 export default function Header() {
@@ -22,30 +22,31 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-3 ">
             {isAuthenticated && (
               <Button
-                text="Logout"
                 onClick={() => {
                   setIsAuthenticated(false);
                 }}
-              />
-            )}
-          </div>
-          <div className="md:hidden flex items-center">
-            <button className="outline-none mobile-menu-button">
-              <svg
-                className=" w-6 h-6 text-gray-500 hover:text-blue-500 "
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
               >
-                <path d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
+              Logout
+          </Button>
+            )}
       </div>
-    </nav>
+      <div className="md:hidden flex items-center">
+        <button className="outline-none mobile-menu-button">
+          <svg
+            className=" w-6 h-6 text-gray-500 hover:text-blue-500 "
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    </div >
+    </nav >
   );
 }
