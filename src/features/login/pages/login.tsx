@@ -35,7 +35,7 @@ export default function LoginPage() {
     >
       <p className="text-center text-sm mb-2">Username: user</p>
       <p className="text-center text-sm mb-3">Password: user</p>
-      {/* <Input
+      <Input
         onError={errors}
         placeholder="Username"
         label="Username"
@@ -44,17 +44,14 @@ export default function LoginPage() {
         name="username"
       />
       <Input
-      
         errors={errors}
         placeholder="Password"
         label="Password"
         type="password"
         register={register}
         name="password"
-      /> */}
-      <Button type="submit">
-        Login
-      </Button>
+      />
+      <Button type="submit">Login</Button>
     </form>
   );
 }
