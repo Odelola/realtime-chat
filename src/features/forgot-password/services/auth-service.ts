@@ -1,0 +1,15 @@
+import { type ForgotPasswordBody } from '../types/auth';
+
+// Dummy forgot password request that will resolve in 2 seconds
+export const forgotPassword = async (body: ForgotPasswordBody) => {
+  const res = new Promise<boolean>((resolve, reject) => {
+    if (body.email !== 'user') {
+      reject(new Error('Invalid email'));
+    }
+
+    setTimeout(() => {
+      resolve(true);
+    }, 2000);
+  });
+  return await res;
+};

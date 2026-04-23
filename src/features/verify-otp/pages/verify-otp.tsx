@@ -1,8 +1,8 @@
-import { LoginForm } from '../login-form';
+import { VerifyOTPForm } from '../verify-otp-form';
 
-export default function LoginPage() {
+export default function VerifyOTPPage() {
   return (
-    <div className="w-full py-8 bg-[#0D0E11] flex flex-col items-center">
+    <div className="min-h-screen w-full py-8 bg-[#0D0E11] flex flex-col items-center">
       <header className="">
         <figure className="flex flex-col items-center">
           <img src="/images/logo.svg" alt="" />
@@ -16,7 +16,7 @@ export default function LoginPage() {
           </figcaption>
         </figure>
       </header>
-      <LoginForm />
+      <VerifyOTPForm />
     </div>
   );
 }
