@@ -9,7 +9,7 @@ type AuthState = {
 const useAuthStore = create<AuthState>()(
   logger<AuthState>(
     (set) => ({
-      isAuthenticated: true,
+      isAuthenticated: false,
       setIsAuthenticated: (isAuthenticated) => {
         set({ isAuthenticated });
       },
