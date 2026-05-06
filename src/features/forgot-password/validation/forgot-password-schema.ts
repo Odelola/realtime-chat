@@ -5,6 +5,5 @@ export const forgotPasswordSchema = yup.object().shape({
     .string()
     .trim()
     .required('Email is required.')
-    .email('Invalid email format.')
-    .max(40),
+    .email('Invalid email format.'),
 });

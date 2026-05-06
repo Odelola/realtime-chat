@@ -1,13 +1,12 @@
 import * as yup from 'yup';
 
 export const signupSchema = yup.object().shape({
-  name: yup.string().trim().required('Name is required.').max(40),
+  name: yup.string().trim().required('Name is required.').max(50),
   email: yup
     .string()
     .trim()
     .required('Email is required.')
-    .email('Invalid email format.')
-    .max(40),
+    .email('Invalid email format.'),
   password: yup
     .string()
     .required('Password is required.')

@@ -5,8 +5,7 @@ export const loginSchema = yup.object().shape({
     .string()
     .trim()
     .required('Email is required.')
-    .email('Invalid email format.')
-    .max(40),
+    .email('Invalid email format.'),
   password: yup
     .string()
     .required('Password is required.')
