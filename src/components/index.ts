@@ -106,7 +106,7 @@ export {
   FieldSet,
   FieldContent,
   FieldTitle,
-} from './ui/field';
+} from './ui/form-field';
 export { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 export { RadioGroup, RadioGroupItem } from './ui/radio-group';

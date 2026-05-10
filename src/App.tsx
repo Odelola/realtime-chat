@@ -1,5 +1,5 @@
 import { ToastContainer } from 'react-toastify';
-import Header from '@/components/ui/header';
+// import Header from '@/components/ui/header';
 import Router from './routes';
 import { AppProvider } from './provider';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,7 +9,7 @@ function App() {
   return (
     <AppProvider>
       <div className="App h-screen">
-        <Header />
+        {/* <Header /> */}
         <Router />
       </div>
       <ToastContainer />
