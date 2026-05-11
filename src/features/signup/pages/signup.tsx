@@ -1,6 +1,6 @@
-import { LoginForm } from '../login-form';
+import { SignupForm } from '../signup-form';
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <div className="w-full py-8 bg-[#0D0E11] flex flex-col items-center">
       <header className="">
@@ -16,7 +16,7 @@ export default function LoginPage() {
           </figcaption>
         </figure>
       </header>
-      <LoginForm />
+      <SignupForm />
     </div>
   );
 }
