@@ -199,7 +199,7 @@ const LandingPage = () => {
           <aside className="flex flex-col gap-5 max-w-md">
             <h1 className="text-2xl font-bold text-white">Nexus Slate</h1>
             <p className="text-gray-300 text-base md:text-lg">
-              The collaboration platform for modern product
+              The collaboration platform for modern products
               <br /> teams. Engineered for focus, built for speed.
             </p>
           </aside>
@@ -209,7 +209,7 @@ const LandingPage = () => {
               <h2 className="text-lg font-bold mb-4">Product</h2>
               <ul className="flex flex-col gap-3 text-sm md:text-base">
                 <li>Features</li>
-                <li>Integration</li>
+                <li>Integrations</li>
                 <li>Pricing</li>
                 <li>Change</li>
                 <li>Log</li>
