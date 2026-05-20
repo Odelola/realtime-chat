@@ -1,9 +1,9 @@
-import LoginPage from '../../login/pages/login';
+import LandingPage from '@/components/landingpage/landinpage';
 
 export default function HomePage() {
   return (
-    <div className="h-screen flex items-center justify-center">
-      <LoginPage />
+    <div>
+      <LandingPage />
     </div>
   );
 }
