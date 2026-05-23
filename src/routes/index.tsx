@@ -28,7 +28,7 @@ const Router = () => (
         }
       />
       <Route
-        path="verify"
+        path="/verify"
         element={
           <PublicRoute>
             <VerifyOTP />
