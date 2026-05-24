@@ -119,3 +119,5 @@ export {
   InputGroupText,
   InputGroupTextarea,
 } from './ui/input-group';
+
+export { ScrollArea, ScrollBar } from './ui/scroll-area';
