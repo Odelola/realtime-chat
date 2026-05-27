@@ -25,11 +25,24 @@ import {
   LockIcon,
   MailIcon,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import * as yup from 'yup';
 
 export const LoginForm = () => {
+  //Extra fetch example although it is not as strict as axios 
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/auth/login", {
+    method: 'POST',
+    body: JSON.stringify(null)
+  })
+    .then(resp => resp.text())
+    .then(resp => {
+      console.log("resp", resp);
+    })
+  
+  }, [])
+  
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const { setIsAuthenticated } = useAuthStore((state) => state);
