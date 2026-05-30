@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -57,6 +57,7 @@ export const LoginForm = () => {
   const onSubmit = (data: yup.InferType<typeof loginSchema>) => {
     mutation.mutate(data);
   };
+  const navigate = useNavigate()
 
   return (
     <div className="w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
@@ -166,7 +167,7 @@ export const LoginForm = () => {
             <Button
               type="submit"
               className="mb-6 cursor-pointer rounded-full py-5 bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
-            >
+           onClick={() => navigate('/chat-layout')} >
               Login
             </Button>
             <FieldDescription className="text-center">
