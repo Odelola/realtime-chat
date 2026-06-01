@@ -6,6 +6,7 @@ import VerifyOTP from '@/features/verify-otp/pages';
 import VerifyEmail from '@/features/verify-email/pages';
 import Login from '@/features/login/pages';
 import ForgotPassword from '@/features/forgot-password/pages';
+import Onboarding from '@/features/onboarding/pages/onboarding';
 import PrivateRoute from './private-route';
 import PublicRoute from './public-route';
 
@@ -57,6 +58,14 @@ const Router = () => (
         element={
           <PublicRoute>
             <ForgotPassword />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/onboarding"
+        element={
+          <PublicRoute>
+            <Onboarding />
           </PublicRoute>
         }
       />
