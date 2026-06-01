@@ -17,5 +17,5 @@ import { type LoginBody } from '../types/auth';
 
 export const login = async (body: LoginBody) => {
   const response = await api.post('/auth/login', body);
-  console.log(response);
+  return response;
 };

@@ -10,7 +10,7 @@ export const useVerifyOTPMutation: MutationHandler<boolean, VerifyOTPBody> = (
     mutationKey: ['verify-otp'],
     mutationFn: async (body) => {
       const res = await verifyOTP(body);
-      return res;
+      return true;
     },
     ...options,
   });

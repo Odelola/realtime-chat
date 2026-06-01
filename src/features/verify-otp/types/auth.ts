@@ -1,3 +1,4 @@
 export interface VerifyOTPBody {
-  otp: string;
+  otpCode: string;
+  email: string;
 }

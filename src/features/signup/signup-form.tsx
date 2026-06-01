@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
@@ -30,22 +31,30 @@ import { useState } from 'react';
 
 import * as yup from 'yup';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 export const SignupForm = () => {
+  const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const { setIsAuthenticated } = useAuthStore((state) => state);
-  const form = useForm<SignupBody>({
+  const form = useForm<yup.InferType<typeof signupSchema>>({
     resolver: yupResolver(signupSchema),
     defaultValues: {
-      name: '',
       email: '',
+      fullName: '',
+      username: '',
       password: '',
     },
   });
 
   const mutation = useSignupMutation({
     onSuccess: () => {
-      setIsAuthenticated(true);
+      // setIsAuthenticated(true);
+      queryClient.setQueryData(['email'], form.getValues('email'));
     },
     onError: (err) => {
       toast.error(err.message, { theme: 'colored' });
@@ -66,36 +75,6 @@ export const SignupForm = () => {
         <FieldGroup>
           <div className="space-y-6 mb-4">
             <Controller
-              name="name"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field className="" data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor={field.name}
-                    className="uppercase text-[#ABAAAE] font-medium text-xs tracking-[1.2px]"
-                  >
-                    Full name
-                  </FieldLabel>
-                  <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
-                    <InputGroupInput
-                      {...field}
-                      id={field.name}
-                      type="email"
-                      placeholder="Alex Obsidian"
-                      className="text-[#ABAAAE]"
-                      aria-invalid={fieldState.invalid}
-                    />
-                    <InputGroupAddon align="inline-start">
-                      <UserIcon className="text-[#ABAAAE]" />
-                    </InputGroupAddon>
-                  </InputGroup>
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
               name="email"
               control={form.control}
               render={({ field, fieldState }) => (
@@ -111,7 +90,65 @@ export const SignupForm = () => {
                       {...field}
                       id={field.name}
                       type="email"
-                      placeholder="name@company.com"
+                      placeholder="alex.obsidian@mail.com"
+                      className="text-[#ABAAAE]"
+                      aria-invalid={fieldState.invalid}
+                    />
+                    <InputGroupAddon align="inline-start">
+                      <UserIcon className="text-[#ABAAAE]" />
+                    </InputGroupAddon>
+                  </InputGroup>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="fullName"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field className="" data-invalid={fieldState.invalid}>
+                  <FieldLabel
+                    htmlFor={field.name}
+                    className="uppercase text-[#ABAAAE] font-medium text-xs tracking-[1.2px]"
+                  >
+                    Full name
+                  </FieldLabel>
+                  <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
+                    <InputGroupInput
+                      {...field}
+                      id={field.name}
+                      placeholder="Alex Obsidian"
+                      className="text-[#ABAAAE]"
+                      aria-invalid={fieldState.invalid}
+                    />
+                    <InputGroupAddon align="inline-start">
+                      <UserIcon className="text-[#ABAAAE]" />
+                    </InputGroupAddon>
+                  </InputGroup>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="username"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field className="" data-invalid={fieldState.invalid}>
+                  <FieldLabel
+                    htmlFor={field.name}
+                    className="uppercase text-[#ABAAAE] font-medium text-xs tracking-[1.2px]"
+                  >
+                    Username
+                  </FieldLabel>
+                  <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
+                    <InputGroupInput
+                      {...field}
+                      id={field.name}
+                      placeholder="alexobsidian"
                       className="text-[#ABAAAE]"
                       aria-invalid={fieldState.invalid}
                     />

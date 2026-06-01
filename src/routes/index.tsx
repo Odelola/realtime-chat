@@ -3,6 +3,7 @@ import Articles from '@/features/articles/pages';
 import Home from '@/features/home/pages';
 import Signup from '@/features/signup/pages';
 import VerifyOTP from '@/features/verify-otp/pages';
+import VerifyEmail from '@/features/verify-email/pages';
 import Login from '@/features/login/pages';
 import ForgotPassword from '@/features/forgot-password/pages';
 import PrivateRoute from './private-route';
@@ -28,10 +29,18 @@ const Router = () => (
         }
       />
       <Route
-        path="/verify"
+        path="/verify-otp"
         element={
           <PublicRoute>
             <VerifyOTP />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/verify-email"
+        element={
+          <PublicRoute>
+            <VerifyEmail />
           </PublicRoute>
         }
       />

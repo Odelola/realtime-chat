@@ -9,8 +9,8 @@ export const useLoginMutation: MutationHandler<boolean, LoginBody> = (
   return useMutation({
     mutationKey: ['login'],
     mutationFn: async (body) => {
-      const res = await login(body);
-      return res;
+      await login(body);
+      return true;
     },
     ...options,
   });
