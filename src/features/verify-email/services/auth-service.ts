@@ -1,5 +1,5 @@
 import { api } from '@/lib/api';
-import { type VerifyEmailBody } from '../types/auth';
+import { type VerifyEmailBody } from '@/features/verify-email/types/auth';
 
 // Dummy verify email request that will resolve in 2 seconds
 // export const verifyEmail = async (body: VerifyEmailBody) => {

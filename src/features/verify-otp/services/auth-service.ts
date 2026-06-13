@@ -1,4 +1,4 @@
-import { type VerifyOTPBody } from '../types/auth';
+import { type VerifyOTPBody } from '@/features/verify-otp/types/auth';
 
 // Dummy verify otp request that will resolve in 2 seconds
 export const verifyOTP = async (body: VerifyOTPBody) => {

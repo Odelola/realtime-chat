@@ -1,6 +1,6 @@
-import Header from '../ui/header';
+import Header from '@/components/ui/header';
 import { ReactNode } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 import { EyeOff, ShieldCheck, Zap, MoveRight } from 'lucide-react';
 import BackToTop from './backToTop';
 

@@ -1,4 +1,4 @@
-import { VerifyEmailForm } from '../verify-email-form';
+import { VerifyEmailForm } from '@/features/verify-email/verify-email-form';
 
 export default function VerifyEmailPage() {
   return (

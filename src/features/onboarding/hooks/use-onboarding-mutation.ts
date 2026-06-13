@@ -1,5 +1,5 @@
-import { type OnboardingBody } from '../types/auth';
-import { onboarding } from '../services/auth-service';
+import { type OnboardingBody } from '@/features/onboarding/types/auth';
+import { onboarding } from '@/features/onboarding/services/auth-service';
 import { type MutationHandler } from '@/lib/react-query';
 import { useMutation } from '@tanstack/react-query';
 

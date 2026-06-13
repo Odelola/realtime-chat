@@ -1,5 +1,5 @@
-import { type VerifyOTPBody } from '../types/auth';
-import { verifyOTP } from '../services/auth-service';
+import { type VerifyOTPBody } from '@/features/verify-otp/types/auth';
+import { verifyOTP } from '@/features/verify-otp/services/auth-service';
 import { type MutationHandler } from '@/lib/react-query';
 import { useMutation } from '@tanstack/react-query';
 

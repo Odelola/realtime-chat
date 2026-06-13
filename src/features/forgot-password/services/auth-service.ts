@@ -1,5 +1,5 @@
 import { api } from '@/lib/api';
-import { type ForgotPasswordBody } from '../types/auth';
+import { type ForgotPasswordBody } from '@/features/forgot-password/types/auth';
 
 // Dummy forgot password request that will resolve in 2 seconds
 // export const forgotPassword = async (body: ForgotPasswordBody) => {
@@ -16,5 +16,4 @@ import { type ForgotPasswordBody } from '../types/auth';
 // };
 export const forgotPassword = async (body: ForgotPasswordBody) => {
   const response = await api.post('/auth/forgot-password', body);
-  console.log(response);
-}
+};

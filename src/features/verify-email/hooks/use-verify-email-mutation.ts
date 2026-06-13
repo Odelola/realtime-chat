@@ -1,5 +1,5 @@
-import { type VerifyEmailBody } from '../types/auth';
-import { verifyEmail } from '../services/auth-service';
+import { type VerifyEmailBody } from '@/features/verify-email/types/auth';
+import { verifyEmail } from '@/features/verify-email/services/auth-service';
 import { type MutationHandler } from '@/lib/react-query';
 import { useMutation } from '@tanstack/react-query';
 
