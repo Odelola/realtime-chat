@@ -21,7 +21,7 @@ import * as yup from 'yup';
 
 export const ForgotPasswordForm = () => {
   const { setIsAuthenticated } = useAuthStore((state) => state);
-  const form = useForm<ForgotPasswordBody>({
+  const form = useForm<yup.InferType<typeof forgotPasswordSchema>>({
     resolver: yupResolver(forgotPasswordSchema),
     defaultValues: {
       email: '',
@@ -61,7 +61,6 @@ export const ForgotPasswordForm = () => {
                     <InputGroupInput
                       {...field}
                       id={field.name}
-                      type="email"
                       placeholder="name@company.com"
                       className="text-[#ABAAAE]"
                       aria-invalid={fieldState.invalid}

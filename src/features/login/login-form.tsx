@@ -25,18 +25,19 @@ import {
   LockIcon,
   MailIcon,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import * as yup from 'yup';
 
 export const LoginForm = () => {
+  
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const { setIsAuthenticated } = useAuthStore((state) => state);
-  const form = useForm<LoginBody>({
+  const form = useForm<yup.InferType<typeof loginSchema>>({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      email: '',
+      identifier: '',
       password: '',
     },
   });
@@ -64,7 +65,7 @@ export const LoginForm = () => {
         <FieldGroup>
           <div className="space-y-6 mb-4">
             <Controller
-              name="email"
+              name="identifier"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field className="" data-invalid={fieldState.invalid}>
@@ -72,14 +73,12 @@ export const LoginForm = () => {
                     htmlFor={field.name}
                     className="uppercase text-[#ABAAAE] font-medium text-xs tracking-[1.2px]"
                   >
-                    Email address
+                    Email or username
                   </FieldLabel>
                   <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
                     <InputGroupInput
                       {...field}
                       id={field.name}
-                      type="email"
-                      placeholder="name@company.com"
                       className="text-[#ABAAAE]"
                       aria-invalid={fieldState.invalid}
                     />

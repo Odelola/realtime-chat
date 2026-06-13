@@ -1,5 +1,5 @@
-import { type SignupBody } from '../types/auth';
-import { signup } from '../services/auth-service';
+import { type SignupBody } from '@/features/signup/types/auth';
+import { signup } from '@/features/signup/services/auth-service';
 import { type MutationHandler } from '@/lib/react-query';
 import { useMutation } from '@tanstack/react-query';
 

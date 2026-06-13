@@ -1,4 +1,4 @@
-import { type OnboardingBody } from '../types/auth';
+import { type OnboardingBody } from '@/features/onboarding/types/auth';
 
 // Dummy onboarding request that will resolve in 2 seconds
 export const onboarding = async (body: OnboardingBody) => {

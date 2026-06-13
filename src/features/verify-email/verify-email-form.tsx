@@ -1,10 +1,6 @@
-import { Link } from 'react-router-dom';
-
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
   Field,
@@ -20,50 +16,63 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from '@/components';
-import { verifyOTPSchema } from './validation/verify-otp-schema';
+import { verifyEmailSchema } from './validation/verify-email-schema';
 import useAuthStore from '@/store/auth-store';
-import { type VerifyOTPBody } from './types/auth';
-import { useVerifyOTPMutation } from './hooks/use-verify-otp-mutation';
+import { type VerifyEmailBody } from './types/auth';
+import { useVerifyEmailMutation } from './hooks/use-verify-email-mutation';
 
-import { useRef } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import { useRef, useEffect } from 'react';
 
 import * as yup from 'yup';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 
-export const VerifyOTPForm = () => {
+export const VerifyEmailForm = () => {
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
   const email = queryClient.getQueryData<string>(['email']) || '';
+
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('token') || '';
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const { setIsAuthenticated } = useAuthStore((state) => state);
-  const form = useForm<yup.InferType<typeof verifyOTPSchema>>({
-    resolver: yupResolver(verifyOTPSchema),
-    defaultValues: {
-      otpCode: '',
-    },
-  });
+  // const form = useForm<yup.InferType<typeof verifyEmailSchema>>({
+  //   resolver: yupResolver(verifyEmailSchema),
+  //   defaultValues: {
+  //     token
+  //   },
+  // });
 
-  const mutation = useVerifyOTPMutation({
+  const mutation = useVerifyEmailMutation({
     onSuccess: () => {
-      setIsAuthenticated(true);
+      queryClient.removeQueries({ queryKey: ['email'] });
+
+      navigate('/onboarding');
     },
     onError: (err) => {
       toast.error(err.message, { theme: 'colored' });
     },
   });
 
-  const onSubmit = (data: yup.InferType<typeof verifyOTPSchema>) => {
-    mutation.mutate({ otpCode: data.otpCode, email });
-  };
+  // const onSubmit = (data: yup.InferType<typeof verifyEmailSchema>) => {
+  //   mutation.mutate({ token: data.token, email });
+  // };
+
+  useEffect(() => {
+    mutation.mutate({ token, email });
+  }, []);
 
   return (
     <div className="w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
-      <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} method="POST">
+      {/* <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} method="POST">
         <FieldGroup>
           <div className="space-y-4 mb-4">
             <Controller
-              name="otpCode"
+              name="token"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
@@ -71,7 +80,7 @@ export const VerifyOTPForm = () => {
                     htmlFor={field.name}
                     className="uppercase text-[#ABAAAE] font-medium text-xs tracking-[1.2px]"
                   >
-                    One-Time Password
+                    Token
                   </FieldLabel>
                   <InputOTP
                     {...field}
@@ -116,7 +125,7 @@ export const VerifyOTPForm = () => {
             </FieldDescription>
           </Field>
         </FieldGroup>
-      </form>
+      </form> */}
     </div>
   );
 };

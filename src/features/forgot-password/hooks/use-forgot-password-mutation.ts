@@ -1,5 +1,5 @@
-import { type ForgotPasswordBody } from '../types/auth';
-import { forgotPassword } from '../services/auth-service';
+import { type ForgotPasswordBody } from '@/features/forgot-password/types/auth';
+import { forgotPassword } from '@/features/forgot-password/services/auth-service';
 import { type MutationHandler } from '@/lib/react-query';
 import { useMutation } from '@tanstack/react-query';
 
