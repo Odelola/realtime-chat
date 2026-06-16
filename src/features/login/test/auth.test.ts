@@ -2,7 +2,7 @@ import { login } from '@/features/login/services/auth-service';
 
 describe('login', () => {
   it('should return true on successfull login', async () => {
-    const body = { email: 'user', password: 'user' };
+    const body = { identifier: 'user', password: 'user' };
     const res = await login(body);
     expect(res).toBe(true);
   });
