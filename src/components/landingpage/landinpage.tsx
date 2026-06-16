@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { EyeOff, ShieldCheck, Zap, MoveRight } from 'lucide-react';
 import BackToTop from './backToTop';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
   type cardType = {
@@ -31,6 +32,7 @@ const LandingPage = () => {
       text: 'Experience real-time sync that actually feels instant. Powered by a proprietary distributed architecture.',
     },
   ];
+  const navigate = useNavigate();
   return (
     <div className="bg-gray-800 w-full h-max-content">
       <Header />
@@ -53,7 +55,7 @@ const LandingPage = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto justify-center items-center">
-          <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-3 py-6 rounded-md w-full sm:w-auto">
+          <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-3 py-6 rounded-md w-full sm:w-auto" onClick={() => navigate('/signup')}>
             Start building for free
           </Button>
 
@@ -184,11 +186,11 @@ const LandingPage = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center items-center">
-            <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white  px-3 py-6 rounded-md w-full sm:w-auto">
+            <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white  px-3 py-6 rounded-md w-full sm:w-auto" onClick={() => navigate('/signup')}>
               Get started for free
             </Button>
 
-            <Button className="bg-transparent border border-gray-700 text-gray-300  px-3 py-6 rounded-md w-full sm:w-auto hover:bg-gray-800 transition">
+            <Button className="bg-transparent border border-gray-700 text-gray-300  px-3 py-6 rounded-md w-full sm:w-auto hover:bg-gray-800 transition" onClick={() => navigate('/login')}>
               Talk to teams
             </Button>
           </div>

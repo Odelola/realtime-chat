@@ -9,6 +9,8 @@ import ForgotPassword from '@/features/forgot-password/pages';
 import Onboarding from '@/features/onboarding/pages/onboarding';
 import PrivateRoute from './private-route';
 import PublicRoute from './public-route';
+import ChatLayout from '@/components/dashboard/chat-layout';
+import { SidebarProvider } from '@/components/ui/sidebar';
 
 const Router = () => (
   <BrowserRouter>
@@ -76,6 +78,16 @@ const Router = () => (
             <Articles />
           </PrivateRoute>
         }
+      />
+      <Route
+      path='/chat-layout'
+      element={
+      <PrivateRoute>
+        <SidebarProvider>
+           <ChatLayout/>
+        </SidebarProvider>
+      
+      </PrivateRoute>}
       />
     </Routes>
   </BrowserRouter>
