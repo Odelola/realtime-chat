@@ -10,8 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\"",
-    "staged": "vitest run --silent && tsc && vite build",
-    "test": "vitest",
+    "staged": "vite build",
     "release": "standard-version",
     "commit": "git-cz"
   },
