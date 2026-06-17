@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { Controller, useForm } from 'react-hook-form';
@@ -10,10 +9,6 @@ import {
   Field,
   FieldLabel,
   FieldError,
-  InputGroup,
-  InputGroupInput,
-  InputGroupAddon,
-  FieldSeparator,
   FieldGroup,
   FieldDescription,
   InputOTP,
@@ -22,7 +17,6 @@ import {
 } from '@/components';
 import { verifyOTPSchema } from './validation/verify-otp-schema';
 import useAuthStore from '@/store/auth-store';
-import { type VerifyOTPBody } from './types/auth';
 import { useVerifyOTPMutation } from './hooks/use-verify-otp-mutation';
 
 import { useRef } from 'react';
@@ -31,12 +25,14 @@ import * as yup from 'yup';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 
 export const VerifyOTPForm = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const email = queryClient.getQueryData<string>(['email']) || '';
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const { setIsAuthenticated } = useAuthStore((state) => state);
+  const { setIsAuthenticated, setTokens } = useAuthStore((state) => state);
+
   const form = useForm<yup.InferType<typeof verifyOTPSchema>>({
     resolver: yupResolver(verifyOTPSchema),
     defaultValues: {
@@ -45,8 +41,10 @@ export const VerifyOTPForm = () => {
   });
 
   const mutation = useVerifyOTPMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setTokens(data.accessToken, data.refreshToken);
       setIsAuthenticated(true);
+      navigate('/chat-layout');
     },
     onError: (err) => {
       toast.error(err.message, { theme: 'colored' });
@@ -102,17 +100,19 @@ export const VerifyOTPForm = () => {
           <Field>
             <Button
               type="submit"
+              disabled={mutation.isPending}
               className="mb-6 cursor-pointer rounded-full py-5 bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
             >
-              Verify Code
+              {mutation.isPending ? 'Verifying…' : 'Verify Code'}
             </Button>
             <FieldDescription className="text-center">
               Didn&apos;t receive the code?{' '}
-              <Link to="#" className="no-underline">
-                <span className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] no-underline hover:underline hover:text-[#9FA7FF]">
-                  Resend Code
-                </span>
-              </Link>
+              <button
+                type="button"
+                className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] hover:underline cursor-pointer bg-transparent border-none p-0"
+              >
+                Resend Code
+              </button>
             </FieldDescription>
           </Field>
         </FieldGroup>

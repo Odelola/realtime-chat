@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -17,8 +17,6 @@ import {
   FieldDescription,
 } from '@/components';
 import { signupSchema } from './validation/signup-schema';
-import useAuthStore from '@/store/auth-store';
-import { type SignupBody } from './types/auth';
 import { useSignupMutation } from './hooks/use-signup-mutation';
 import {
   EyeIcon,
@@ -40,7 +38,6 @@ export const SignupForm = () => {
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const { setIsAuthenticated } = useAuthStore((state) => state);
   const form = useForm<yup.InferType<typeof signupSchema>>({
     resolver: yupResolver(signupSchema),
     defaultValues: {
@@ -53,8 +50,8 @@ export const SignupForm = () => {
 
   const mutation = useSignupMutation({
     onSuccess: () => {
-      // setIsAuthenticated(true);
       queryClient.setQueryData(['email'], form.getValues('email'));
+      navigate('/verify-email');
     },
     onError: (err) => {
       toast.error(err.message, { theme: 'colored' });
