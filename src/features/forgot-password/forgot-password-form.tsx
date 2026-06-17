@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,17 +12,15 @@ import {
   InputGroupInput,
   InputGroupAddon,
   FieldGroup,
+  FieldDescription,
 } from '@/components';
 import { forgotPasswordSchema } from './validation/forgot-password-schema';
-import useAuthStore from '@/store/auth-store';
-import { type ForgotPasswordBody } from './types/auth';
 import { useForgotPasswordMutation } from './hooks/use-forgot-password-mutation';
 import { MailIcon } from 'lucide-react';
 
 import * as yup from 'yup';
 
 export const ForgotPasswordForm = () => {
-  const { setIsAuthenticated } = useAuthStore((state) => state);
   const form = useForm<yup.InferType<typeof forgotPasswordSchema>>({
     resolver: yupResolver(forgotPasswordSchema),
     defaultValues: {
@@ -30,7 +30,10 @@ export const ForgotPasswordForm = () => {
 
   const mutation = useForgotPasswordMutation({
     onSuccess: () => {
-      setIsAuthenticated(true);
+      toast.success('Password reset link sent. Check your email.', {
+        theme: 'colored',
+      });
+      form.reset();
     },
     onError: (err) => {
       toast.error(err.message, { theme: 'colored' });
@@ -79,10 +82,18 @@ export const ForgotPasswordForm = () => {
           <Field>
             <Button
               type="submit"
+              disabled={mutation.isPending}
               className="mb-6 cursor-pointer rounded-full py-5 bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
             >
-              Send Reset Link
+              {mutation.isPending ? 'Sending…' : 'Send Reset Link'}
             </Button>
+            <FieldDescription className="text-center">
+              <Link to="/login" className="no-underline">
+                <span className="text-[#ABAAAE] text-sm underline-offset-4 tracking-[1px] hover:underline hover:text-[#9FA7FF]">
+                  Back to login
+                </span>
+              </Link>
+            </FieldDescription>
           </Field>
         </FieldGroup>
       </form>
