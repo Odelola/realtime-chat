@@ -2,7 +2,7 @@ import { login } from '@/features/login/services/auth-service';
 
 describe('login', () => {
   it('should return true on successfull login', async () => {
-    const body = { email: 'user', password: 'user' };
+    const body = { username: 'user', password: 'user' };
     const res = await login(body);
     expect(res).toBe(true);
   });
@@ -10,10 +10,10 @@ describe('login', () => {
   it('should throw error message on failed login', async () => {
     expect.assertions(1);
     try {
-      const body = { email: 'user', password: 'wrong' };
+      const body = { username: 'user', password: 'wrong' };
       await login(body);
     } catch (err) {
-      expect((err as Error).message).toMatch('Invalid email or password');
+      expect((err as Error).message).toMatch('Invalid username or password');
     }
   });
 });

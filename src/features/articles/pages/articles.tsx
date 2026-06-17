@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import useDebounce from '@/hooks/use-debounce';
 import { formatDate } from '@/lib/helper';
-import { useGetArticlesQuery } from '@/features/articles/hooks/use-get-articles-query';
-import { GetArticlesProps, type Article } from '@/features/articles/types/article';
+import { useGetArticlesQuery } from '../hooks/use-get-articles-query';
+import { GetArticlesProps, type Article } from '../types/article';
 
 export interface ArticleListProps {
   articles: Article[];

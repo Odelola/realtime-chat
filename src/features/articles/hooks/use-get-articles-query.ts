@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import {
   type GetArticleResponse,
   type GetArticlesProps,
-} from '@/features/articles/types/article';
-import { getArticles } from '@/features/articles/services/article-service';
+} from '../types/article';
+import { getArticles } from '../services/article-service';
 import { QueryHandler } from '@/lib/react-query';
 
 export const useGetArticlesQuery: QueryHandler<

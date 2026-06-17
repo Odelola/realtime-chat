@@ -6,10 +6,11 @@ import {
 } from './interceptors';
 
 const axiosRequestConfig: AxiosRequestConfig = {
-  baseURL: import.meta.env.VITE_APP_BASE_URL as string,
+  baseURL: import.meta.env.VITE_API_END_POINT as string,
   responseType: 'json',
   headers: {
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
   },
 };
 
