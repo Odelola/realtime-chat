@@ -14,8 +14,10 @@ import{
  MessageSquare,
   Users
 } from "lucide-react"
-
+import CreateGuildModal from "@/features/guild/guild-modal/create-guild-modal"
+import { useState } from "react"
 export default function AppSidebar() {
+  const[showCreateGuild, setShowCreateGuild] = useState(false)
   return(
      <Sidebar
   collapsible="none"
@@ -24,12 +26,24 @@ export default function AppSidebar() {
 
      <SidebarHeader className="p-3 md:p-6 border-b border-white/10 bg-[#0B0B14]" >
     
-        <div className="flex flex-col items-center justify-center ">
-           <span className="w-14 h-14 md:w-24 md:h-24 rounded-full mb-2 md:mb-4 bg-[#1A1A2E]"></span>
+        <div className="flex flex-col items-center justify-center">
+  <span className="w-14 h-14 md:w-24 md:h-24 rounded-full mb-2 md:mb-4 bg-[#1A1A2E]" />
 
-          <h1 className="text-sm md:text-xl font-bold hidden lg:block text-white">Nexus Slate</h1>
-          <p className="text-xs text-gray-400 uppercase -tracking-widest hidden md:block">Workspace</p>
-        </div>
+  <h1 className="text-sm md:text-xl font-bold hidden lg:block text-white">
+    Nexus Slate
+  </h1>
+
+  <p className="text-xs text-gray-400 uppercase -tracking-widest hidden md:block">
+    Workspace
+  </p>
+
+  <button
+    onClick={() => setShowCreateGuild(true)}
+    className="mt-4 px-3 py-2 text-xs bg-indigo-600 text-white rounded-md hover:bg-indigo-500"
+  >
+    Create Guild
+  </button>
+</div>
      </SidebarHeader>
      <SidebarContent className="bg-[#0B0B14]">
       <SidebarGroup>
@@ -87,6 +101,10 @@ export default function AppSidebar() {
         </SidebarGroup>
           
      </SidebarContent>  
+     <CreateGuildModal
+  isOpen={showCreateGuild}
+  onClose={() => setShowCreateGuild(false)}
+/>
      </Sidebar>
   )
 }

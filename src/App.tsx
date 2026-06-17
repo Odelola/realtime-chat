@@ -16,11 +16,11 @@ function App() {
   return (
     <AppProvider>
       <div className="App h-screen">
-        <Router />
-         {/* <SidebarProvider>
+        {/* <Router /> */}
+         <SidebarProvider>
           
           <ChatLayout />
-        </SidebarProvider>  */}
+        </SidebarProvider> 
          {/* <ChannelSiderbar/> */}
         
       </div>

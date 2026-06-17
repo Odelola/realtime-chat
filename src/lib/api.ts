@@ -5,6 +5,7 @@ import {
   successInterceptor,
 } from './interceptors';
 
+
 const axiosRequestConfig: AxiosRequestConfig = {
   baseURL: import.meta.env.VITE_API_END_POINT as string,
   responseType: 'json',
@@ -13,7 +14,7 @@ const axiosRequestConfig: AxiosRequestConfig = {
     'Access-Control-Allow-Origin': '*',
   },
 };
-
+console.log(import.meta.env.VITE_API_END_POINT);
 const api: AxiosInstance = axios.create(axiosRequestConfig);
 
 api.interceptors.request.use(requestInterceptor);

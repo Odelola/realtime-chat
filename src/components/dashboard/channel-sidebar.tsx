@@ -3,6 +3,8 @@ type Props = {
   onClose?: () => void;
 }
 const ChannelSiderbar = ({ onClose }: Props) => {
+  
+
   return (
    <aside className="h-screen w-[280px] sm:w-[320px] bg-[#0D0D18] p-6 border-l border-white/10">
 

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ChatLayout = () => {
   const [showChannelSidebar, setShowChannelSidebar] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
  
   return (
     <div className="flex h-screen w-full bg-[#0B0B12] overflow-hidden">
