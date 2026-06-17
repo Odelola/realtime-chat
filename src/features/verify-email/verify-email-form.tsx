@@ -102,7 +102,8 @@ export const VerifyEmailForm = () => {
             <Link to="/login" className="no-underline">
               <span className="text-[#ABAAAE] text-sm underline-offset-4 tracking-[1px] hover:underline hover:text-[#9FA7FF]">
                 Back to login
-              </span>
+              </span>   
+          
             </Link>
           </FieldDescription>
         </div>
