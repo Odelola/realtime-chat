@@ -1,8 +1,9 @@
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { Button, FieldGroup, FieldDescription } from '@/components';
 import { useVerifyEmailMutation } from './hooks/use-verify-email-mutation';
+import { resendVerifyEmail } from './services/auth-service';
 import { MailCheckIcon, LoaderCircleIcon, XCircleIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
@@ -15,6 +16,18 @@ export const VerifyEmailForm = () => {
   const token = searchParams.get('token') || '';
 
   const hasFired = useRef(false);
+
+  const resendMutation = useMutation({
+    mutationFn: () => resendVerifyEmail(email),
+    onSuccess: () => {
+      toast.success('Verification email resent. Check your inbox.', {
+        theme: 'colored',
+      });
+    },
+    onError: (err: Error) => {
+      toast.error(err.message, { theme: 'colored' });
+    },
+  });
 
   const mutation = useVerifyEmailMutation({
     onSuccess: () => {
@@ -91,11 +104,14 @@ export const VerifyEmailForm = () => {
 
           <FieldDescription className="text-center mt-2">
             Didn&apos;t receive the email?{' '}
-            <Link to="#" className="no-underline">
-              <span className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] hover:underline">
-                Resend verification email
-              </span>
-            </Link>
+            <button
+              type="button"
+              disabled={resendMutation.isPending || !email}
+              onClick={() => resendMutation.mutate()}
+              className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] hover:underline cursor-pointer bg-transparent border-none p-0 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {resendMutation.isPending ? 'Sending…' : 'Resend verification email'}
+            </button>
           </FieldDescription>
 
           <FieldDescription className="text-center">
