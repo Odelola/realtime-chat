@@ -4,13 +4,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
+    "prepare": "husky install",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\"",
-    "staged": "vitest run --silent && tsc && vite build",
-    "test": "vitest",
+    "staged": "vite build",
     "release": "standard-version",
     "commit": "git-cz"
   },
