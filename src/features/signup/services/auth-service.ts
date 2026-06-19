@@ -21,5 +21,5 @@ import { type SignupBody } from '@/features/signup/types/auth';
 
 export const signup = async (body: SignupBody) => {
   const response = await api.post('/auth/register', body);
-  return response;
+  return response.data;
 };

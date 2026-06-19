@@ -19,7 +19,6 @@ import { verifyOTPSchema } from './validation/verify-otp-schema';
 import useAuthStore from '@/store/auth-store';
 import { useVerifyOTPMutation } from './hooks/use-verify-otp-mutation';
 
-import { useRef } from 'react';
 
 import * as yup from 'yup';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
@@ -27,9 +26,10 @@ import { REGEXP_ONLY_DIGITS } from 'input-otp';
 export const VerifyOTPForm = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const email = queryClient.getQueryData<string>(['email']) || '';
-
-  const formRef = useRef<HTMLFormElement>(null);
+  const email =
+    queryClient.getQueryData<string>(['email']) ||
+    localStorage.getItem('pendingOTPEmail') ||
+    '';
 
   const { setIsAuthenticated, setTokens } = useAuthStore((state) => state);
 
@@ -44,6 +44,7 @@ export const VerifyOTPForm = () => {
     onSuccess: (data) => {
       setTokens(data.accessToken, data.refreshToken);
       setIsAuthenticated(true);
+      localStorage.removeItem('pendingOTPEmail');
       navigate('/chat-layout');
     },
     onError: (err) => {
@@ -57,7 +58,7 @@ export const VerifyOTPForm = () => {
 
   return (
     <div className="w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
-      <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} method="POST">
+      <form onSubmit={form.handleSubmit(onSubmit)} method="POST">
         <FieldGroup>
           <div className="space-y-4 mb-4">
             <Controller
@@ -80,7 +81,7 @@ export const VerifyOTPForm = () => {
                       value={field.value}
                       onChange={field.onChange}
                       autoFocus
-                      onComplete={() => formRef.current?.submit()}
+                      onComplete={form.handleSubmit(onSubmit)}
                     >
                       <InputOTPGroup>
                         <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={0} />
