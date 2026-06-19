@@ -39,6 +39,7 @@ export const LoginForm = () => {
   const mutation = useLoginMutation({
     onSuccess: (data) => {
       queryClient.setQueryData(['email'], data.email);
+      localStorage.setItem('pendingOTPEmail', data.email);
       navigate('/verify-otp');
     },
     onError: (err) => {
