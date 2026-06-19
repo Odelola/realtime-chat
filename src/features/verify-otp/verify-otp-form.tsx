@@ -71,25 +71,27 @@ export const VerifyOTPForm = () => {
                   >
                     One-Time Password
                   </FieldLabel>
-                  <InputOTP
-                    {...field}
-                    id={field.name}
-                    maxLength={6}
-                    pattern={REGEXP_ONLY_DIGITS}
-                    value={field.value}
-                    onChange={field.onChange}
-                    autoFocus
-                    onComplete={() => formRef.current?.submit()}
-                  >
-                    <InputOTPGroup>
-                      <InputOTPSlot className="text-[#ABAAAE]" index={0} />
-                      <InputOTPSlot className="text-[#ABAAAE]" index={1} />
-                      <InputOTPSlot className="text-[#ABAAAE]" index={2} />
-                      <InputOTPSlot className="text-[#ABAAAE]" index={3} />
-                      <InputOTPSlot className="text-[#ABAAAE]" index={4} />
-                      <InputOTPSlot className="text-[#ABAAAE]" index={5} />
-                    </InputOTPGroup>
-                  </InputOTP>
+                  <div className="flex justify-start py-2 [--foreground:0_0%_100%]">
+                    <InputOTP
+                      {...field}
+                      id={field.name}
+                      maxLength={6}
+                      pattern={REGEXP_ONLY_DIGITS}
+                      value={field.value}
+                      onChange={field.onChange}
+                      autoFocus
+                      onComplete={() => formRef.current?.submit()}
+                    >
+                      <InputOTPGroup>
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={0} />
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={1} />
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={2} />
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={3} />
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={4} />
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={5} />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </div>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}

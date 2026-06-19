@@ -10,10 +10,12 @@ import { useEffect, useRef } from 'react';
 export const VerifyEmailForm = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const email = queryClient.getQueryData<string>(['email']) || '';
-
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token') || '';
+  const email =
+    queryClient.getQueryData<string>(['email']) ||
+    localStorage.getItem('pendingVerificationEmail') ||
+    '';
 
   const hasFired = useRef(false);
 
@@ -32,6 +34,7 @@ export const VerifyEmailForm = () => {
   const mutation = useVerifyEmailMutation({
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: ['email'] });
+      localStorage.removeItem('pendingVerificationEmail');
       navigate('/onboarding');
     },
     onError: (err) => {

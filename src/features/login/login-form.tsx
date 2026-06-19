@@ -58,22 +58,23 @@ export const LoginForm = () => {
     <div className="w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
       <form onSubmit={form.handleSubmit(onSubmit)} method="POST">
         <FieldGroup>
-          <div className="space-y-6 mb-4">
+          <div className="space-y-6 mb-6">
             <Controller
               name="identifier"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field className="" data-invalid={fieldState.invalid}>
+                <Field data-invalid={fieldState.invalid}>
                   <FieldLabel
                     htmlFor={field.name}
                     className="uppercase text-[#ABAAAE] font-medium text-xs tracking-[1.2px]"
                   >
-                    Email or username
+                    Email address
                   </FieldLabel>
                   <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
                     <InputGroupInput
                       {...field}
                       id={field.name}
+                      placeholder="name@company.com"
                       className="text-[#ABAAAE]"
                       aria-invalid={fieldState.invalid}
                     />
@@ -91,7 +92,7 @@ export const LoginForm = () => {
               name="password"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field className="" data-invalid={fieldState.invalid}>
+                <Field data-invalid={fieldState.invalid}>
                   <div className="flex items-center justify-between">
                     <FieldLabel
                       htmlFor={field.name}
@@ -135,6 +136,15 @@ export const LoginForm = () => {
               )}
             />
           </div>
+          <Field className="mb-2">
+            <Button
+              type="submit"
+              disabled={mutation.isPending}
+              className="cursor-pointer rounded-full py-5 bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
+            >
+              {mutation.isPending ? 'Signing in…' : 'Sign In'}
+            </Button>
+          </Field>
           <FieldSeparator className="*:data-[slot=field-separator-content]:bg-[#121316] uppercase">
             Or continue with
           </FieldSeparator>
@@ -142,37 +152,28 @@ export const LoginForm = () => {
             <Button
               variant="outline"
               type="button"
-              className="cursor-pointer py-5 bg-[#24262A] text-[#F1F0F4] rounded-md md:basis-1/2"
+              className="group cursor-pointer py-5 bg-[#24262A] text-[#F1F0F4] rounded-md md:basis-1/2"
             >
-              <img src="/images/google.svg" alt="Google icon" />
+              <img src="/images/google.svg" alt="Google icon" className="group-hover:invert" />
               Google
             </Button>
             <Button
               variant="outline"
               type="button"
-              className="cursor-pointer py-5 bg-[#24262A] text-[#F1F0F4] rounded-md md:basis-1/2"
+              className="group cursor-pointer py-5 bg-[#24262A] text-[#F1F0F4] rounded-md md:basis-1/2"
             >
-              <img src="/images/github.svg" alt="Github icon" />
-              Github
+              <img src="/images/github.svg" alt="GitHub icon" className="group-hover:invert" />
+              GitHub
             </Button>
           </Field>
-          <Field>
-            <Button
-              type="submit"
-              disabled={mutation.isPending}
-              className="mb-6 cursor-pointer rounded-full py-5 bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
-            >
-              {mutation.isPending ? 'Logging in…' : 'Login'}
-            </Button>
-            <FieldDescription className="text-center">
-              Don&apos;t have an account?{' '}
-              <Link to="/signup" className="no-underline">
-                <span className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] no-underline hover:underline hover:text-[#9FA7FF]">
-                  Sign up
-                </span>
-              </Link>
-            </FieldDescription>
-          </Field>
+          <FieldDescription className="text-center">
+            Don&apos;t have an account?{' '}
+            <Link to="/signup" className="no-underline">
+              <span className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] no-underline hover:underline hover:text-[#9FA7FF]">
+                Sign up for free
+              </span>
+            </Link>
+          </FieldDescription>
         </FieldGroup>
       </form>
     </div>
