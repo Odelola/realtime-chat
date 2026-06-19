@@ -35,7 +35,8 @@ export const VerifyEmailForm = () => {
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: ['email'] });
       localStorage.removeItem('pendingVerificationEmail');
-      navigate('/onboarding');
+      toast.success('Email verified! Please log in to continue.', { theme: 'colored' });
+      navigate('/login');
     },
     onError: (err) => {
       toast.error(err.message, { theme: 'colored' });

@@ -12,9 +12,16 @@ import PrivateRoute from './private-route';
 import PublicRoute from './public-route';
 import ChatLayout from '@/components/dashboard/chat-layout';
 import { SidebarProvider } from '@/components/ui/sidebar';
+import { useAuthInit } from '@/hooks/use-auth-init';
+
+const AuthInitializer = () => {
+  useAuthInit();
+  return null;
+};
 
 const Router = () => (
   <BrowserRouter>
+    <AuthInitializer />
     <Routes>
       <Route
         path="/"
