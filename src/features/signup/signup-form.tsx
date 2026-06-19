@@ -50,7 +50,9 @@ export const SignupForm = () => {
 
   const mutation = useSignupMutation({
     onSuccess: () => {
-      queryClient.setQueryData(['email'], form.getValues('email'));
+      const email = form.getValues('email');
+      queryClient.setQueryData(['email'], email);
+      localStorage.setItem('pendingVerificationEmail', email);
       navigate('/verify-email');
     },
     onError: (err) => {
