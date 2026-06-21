@@ -1,4 +1,5 @@
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { type AxiosError } from 'axios';
 
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -45,7 +46,9 @@ export const ResetPasswordForm = () => {
       navigate('/login');
     },
     onError: (err) => {
-      toast.error(err.message, { theme: 'colored' });
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      const message = axiosErr.response?.data?.message ?? err.message;
+      toast.error(message, { theme: 'colored' });
     },
   });
 
