@@ -1,4 +1,4 @@
-import { VerifyOTPForm } from '../verify-otp-form';
+import { VerifyOTPForm } from '@/features/verify-otp/verify-otp-form';
 
 export default function VerifyOTPPage() {
   return (

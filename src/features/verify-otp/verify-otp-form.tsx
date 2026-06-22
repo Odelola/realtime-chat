@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { type AxiosError } from 'axios';
 
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -8,10 +10,6 @@ import {
   Field,
   FieldLabel,
   FieldError,
-  InputGroup,
-  InputGroupInput,
-  InputGroupAddon,
-  FieldSeparator,
   FieldGroup,
   FieldDescription,
   InputOTP,
@@ -20,45 +18,68 @@ import {
 } from '@/components';
 import { verifyOTPSchema } from './validation/verify-otp-schema';
 import useAuthStore from '@/store/auth-store';
-import { type VerifyOTPBody } from './types/auth';
 import { useVerifyOTPMutation } from './hooks/use-verify-otp-mutation';
 
-import { useRef } from 'react';
 
 import * as yup from 'yup';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
+import { useState, useEffect } from 'react';
 
 export const VerifyOTPForm = () => {
-  const formRef = useRef<HTMLFormElement>(null);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const email =
+    queryClient.getQueryData<string>(['email']) ||
+    localStorage.getItem('pendingOTPEmail') ||
+    '';
 
-  const { setIsAuthenticated } = useAuthStore((state) => state);
-  const form = useForm<VerifyOTPBody>({
+  const { setIsAuthenticated, setTokens } = useAuthStore((state) => state);
+
+  const [cooldown, setCooldown] = useState(0);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setTimeout(() => setCooldown((c) => c - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [cooldown]);
+
+  const handleResend = () => {
+    setCooldown(60);
+    toast.success('A new OTP has been sent to your email.', { theme: 'colored' });
+  };
+
+  const form = useForm<yup.InferType<typeof verifyOTPSchema>>({
     resolver: yupResolver(verifyOTPSchema),
     defaultValues: {
-      otp: '',
+      otpCode: '',
     },
   });
 
   const mutation = useVerifyOTPMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setTokens(data.accessToken, data.refreshToken);
       setIsAuthenticated(true);
+      localStorage.removeItem('pendingOTPEmail');
+      navigate('/chat-layout');
     },
     onError: (err) => {
-      toast.error(err.message, { theme: 'colored' });
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      const message = axiosErr.response?.data?.message ?? err.message;
+      toast.error(message, { theme: 'colored' });
     },
   });
 
   const onSubmit = (data: yup.InferType<typeof verifyOTPSchema>) => {
-    mutation.mutate(data);
+    mutation.mutate({ otpCode: data.otpCode, email });
   };
 
   return (
     <div className="w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
-      <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} method="POST">
+      <form onSubmit={form.handleSubmit(onSubmit)} method="POST">
         <FieldGroup>
           <div className="space-y-4 mb-4">
             <Controller
-              name="otp"
+              name="otpCode"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
@@ -68,25 +89,27 @@ export const VerifyOTPForm = () => {
                   >
                     One-Time Password
                   </FieldLabel>
-                  <InputOTP
-                    {...field}
-                    id={field.name}
-                    maxLength={6}
-                    pattern={REGEXP_ONLY_DIGITS}
-                    value={field.value}
-                    onChange={field.onChange}
-                    autoFocus
-                    onComplete={() => formRef.current?.submit()}
-                  >
-                    <InputOTPGroup>
-                      <InputOTPSlot className="text-[#ABAAAE]" index={0} />
-                      <InputOTPSlot className="text-[#ABAAAE]" index={1} />
-                      <InputOTPSlot className="text-[#ABAAAE]" index={2} />
-                      <InputOTPSlot className="text-[#ABAAAE]" index={3} />
-                      <InputOTPSlot className="text-[#ABAAAE]" index={4} />
-                      <InputOTPSlot className="text-[#ABAAAE]" index={5} />
-                    </InputOTPGroup>
-                  </InputOTP>
+                  <div className="flex justify-start py-2 [--foreground:0_0%_100%]">
+                    <InputOTP
+                      {...field}
+                      id={field.name}
+                      maxLength={6}
+                      pattern={REGEXP_ONLY_DIGITS}
+                      value={field.value}
+                      onChange={field.onChange}
+                      autoFocus
+                      onComplete={form.handleSubmit(onSubmit)}
+                    >
+                      <InputOTPGroup>
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={0} />
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={1} />
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={2} />
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={3} />
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={4} />
+                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={5} />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </div>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
@@ -97,17 +120,21 @@ export const VerifyOTPForm = () => {
           <Field>
             <Button
               type="submit"
+              disabled={mutation.isPending}
               className="mb-6 cursor-pointer rounded-full py-5 bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
             >
-              Verify Code
+              {mutation.isPending ? 'Verifying…' : 'Verify Code'}
             </Button>
             <FieldDescription className="text-center">
               Didn&apos;t receive the code?{' '}
-              <Link to="#" className="no-underline">
-                <span className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] no-underline hover:underline hover:text-[#9FA7FF]">
-                  Resend Code
-                </span>
-              </Link>
+              <button
+                type="button"
+                disabled={cooldown > 0}
+                onClick={handleResend}
+                className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] hover:underline cursor-pointer bg-transparent border-none p-0 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {cooldown > 0 ? `Resend in ${cooldown}s` : 'Resend Code'}
+              </button>
             </FieldDescription>
           </Field>
         </FieldGroup>

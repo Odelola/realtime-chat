@@ -1,4 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { type AxiosError } from 'axios';
 
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -16,37 +18,35 @@ import {
   FieldDescription,
 } from '@/components';
 import { loginSchema } from './validation/login-schema';
-import useAuthStore from '@/store/auth-store';
-import { type LoginBody } from './types/auth';
 import { useLoginMutation } from './hooks/use-login-mutation';
-import {
-  EyeIcon,
-  EyeOffIcon,
-  LockIcon,
-  MailIcon,
-} from 'lucide-react';
+import { EyeIcon, EyeOffIcon, LockIcon, MailIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import * as yup from 'yup';
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const { setIsAuthenticated } = useAuthStore((state) => state);
-  const form = useForm<LoginBody>({
+  const form = useForm<yup.InferType<typeof loginSchema>>({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      email: '',
+      identifier: '',
       password: '',
     },
   });
 
   const mutation = useLoginMutation({
-    onSuccess: () => {
-      setIsAuthenticated(true);
+    onSuccess: (data) => {
+      queryClient.setQueryData(['email'], data.email);
+      localStorage.setItem('pendingOTPEmail', data.email);
+      navigate('/verify-otp');
     },
     onError: (err) => {
-      toast.error(err.message, { theme: 'colored' });
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      const message = axiosErr.response?.data?.message ?? err.message;
+      toast.error(message, { theme: 'colored' });
     },
   });
 
@@ -57,18 +57,17 @@ export const LoginForm = () => {
   const onSubmit = (data: yup.InferType<typeof loginSchema>) => {
     mutation.mutate(data);
   };
-  const navigate = useNavigate()
 
   return (
     <div className="w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
       <form onSubmit={form.handleSubmit(onSubmit)} method="POST">
         <FieldGroup>
-          <div className="space-y-6 mb-4">
+          <div className="space-y-6 mb-6">
             <Controller
-              name="email"
+              name="identifier"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field className="" data-invalid={fieldState.invalid}>
+                <Field data-invalid={fieldState.invalid}>
                   <FieldLabel
                     htmlFor={field.name}
                     className="uppercase text-[#ABAAAE] font-medium text-xs tracking-[1.2px]"
@@ -79,7 +78,6 @@ export const LoginForm = () => {
                     <InputGroupInput
                       {...field}
                       id={field.name}
-                      type="email"
                       placeholder="name@company.com"
                       className="text-[#ABAAAE]"
                       aria-invalid={fieldState.invalid}
@@ -98,7 +96,7 @@ export const LoginForm = () => {
               name="password"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field className="" data-invalid={fieldState.invalid}>
+                <Field data-invalid={fieldState.invalid}>
                   <div className="flex items-center justify-between">
                     <FieldLabel
                       htmlFor={field.name}
@@ -142,6 +140,15 @@ export const LoginForm = () => {
               )}
             />
           </div>
+          <Field className="mb-2">
+            <Button
+              type="submit"
+              disabled={mutation.isPending}
+              className="cursor-pointer rounded-full py-5 bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
+            >
+              {mutation.isPending ? 'Signing in…' : 'Sign In'}
+            </Button>
+          </Field>
           <FieldSeparator className="*:data-[slot=field-separator-content]:bg-[#121316] uppercase">
             Or continue with
           </FieldSeparator>
@@ -149,36 +156,28 @@ export const LoginForm = () => {
             <Button
               variant="outline"
               type="button"
-              className="cursor-pointer py-5 bg-[#24262A] text-[#F1F0F4] rounded-md md:basis-1/2"
+              className="group cursor-pointer py-5 bg-[#24262A] text-[#F1F0F4] rounded-md md:basis-1/2"
             >
-              <img src="/images/google.svg" alt="Google icon" />
+              <img src="/images/google.svg" alt="Google icon" className="group-hover:invert" />
               Google
             </Button>
             <Button
               variant="outline"
               type="button"
-              className="cursor-pointer py-5 bg-[#24262A] text-[#F1F0F4] rounded-md md:basis-1/2"
+              className="group cursor-pointer py-5 bg-[#24262A] text-[#F1F0F4] rounded-md md:basis-1/2"
             >
-              <img src="/images/github.svg" alt="Github icon" />
-              Github
+              <img src="/images/github.svg" alt="GitHub icon" className="group-hover:invert" />
+              GitHub
             </Button>
           </Field>
-          <Field>
-            <Button
-              type="submit"
-              className="mb-6 cursor-pointer rounded-full py-5 bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
-           onClick={() => navigate('/chat-layout')} >
-              Login
-            </Button>
-            <FieldDescription className="text-center">
-              Don&apos;t have an account?{' '}
-              <Link to="/signup" className="no-underline">
-                <span className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] no-underline hover:underline hover:text-[#9FA7FF]">
-                  Sign up
-                </span>
-              </Link>
-            </FieldDescription>
-          </Field>
+          <FieldDescription className="text-center">
+            Don&apos;t have an account?{' '}
+            <Link to="/signup" className="no-underline">
+              <span className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] no-underline hover:underline hover:text-[#9FA7FF]">
+                Sign up for free
+              </span>
+            </Link>
+          </FieldDescription>
         </FieldGroup>
       </form>
     </div>

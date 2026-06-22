@@ -2,7 +2,7 @@ import {
   type Article,
   type GetArticleResponse,
   type GetArticlesProps,
-} from '../types/article';
+} from '@/features/articles/types/article';
 
 export async function getArticles(
   params: GetArticlesProps

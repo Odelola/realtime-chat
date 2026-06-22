@@ -6,9 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { isAuthenticated, setIsAuthenticated } = useAuthStore(
-    (state) => state
-  );
+  const { isAuthenticated, logout } = useAuthStore((state) => state);
 
   const navigate = useNavigate()
 
@@ -42,7 +40,7 @@ export default function Header() {
                 </Button>
               </>
             ) : (
-              <Button onClick={() => setIsAuthenticated(false)}>
+              <Button onClick={() => logout()}>
                 Logout
               </Button>
             )}
@@ -75,7 +73,7 @@ export default function Header() {
                 </Button>
               </div>
             ) : (
-              <Button onClick={() => setIsAuthenticated(false)}>
+              <Button onClick={() => logout()}>
                 Logout
               </Button>
             )}
