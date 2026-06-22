@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { type AxiosError } from 'axios';
 
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -43,7 +44,9 @@ export const LoginForm = () => {
       navigate('/verify-otp');
     },
     onError: (err) => {
-      toast.error(err.message, { theme: 'colored' });
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      const message = axiosErr.response?.data?.message ?? err.message;
+      toast.error(message, { theme: 'colored' });
     },
   });
 
