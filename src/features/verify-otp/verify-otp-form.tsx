@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { type AxiosError } from 'axios';
 
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -22,6 +23,7 @@ import { useVerifyOTPMutation } from './hooks/use-verify-otp-mutation';
 
 import * as yup from 'yup';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
+import { useState, useEffect } from 'react';
 
 export const VerifyOTPForm = () => {
   const navigate = useNavigate();
@@ -32,6 +34,19 @@ export const VerifyOTPForm = () => {
     '';
 
   const { setIsAuthenticated, setTokens } = useAuthStore((state) => state);
+
+  const [cooldown, setCooldown] = useState(0);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setTimeout(() => setCooldown((c) => c - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [cooldown]);
+
+  const handleResend = () => {
+    setCooldown(60);
+    toast.success('A new OTP has been sent to your email.', { theme: 'colored' });
+  };
 
   const form = useForm<yup.InferType<typeof verifyOTPSchema>>({
     resolver: yupResolver(verifyOTPSchema),
@@ -48,7 +63,9 @@ export const VerifyOTPForm = () => {
       navigate('/chat-layout');
     },
     onError: (err) => {
-      toast.error(err.message, { theme: 'colored' });
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      const message = axiosErr.response?.data?.message ?? err.message;
+      toast.error(message, { theme: 'colored' });
     },
   });
 
@@ -112,9 +129,11 @@ export const VerifyOTPForm = () => {
               Didn&apos;t receive the code?{' '}
               <button
                 type="button"
-                className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] hover:underline cursor-pointer bg-transparent border-none p-0"
+                disabled={cooldown > 0}
+                onClick={handleResend}
+                className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] hover:underline cursor-pointer bg-transparent border-none p-0 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Resend Code
+                {cooldown > 0 ? `Resend in ${cooldown}s` : 'Resend Code'}
               </button>
             </FieldDescription>
           </Field>

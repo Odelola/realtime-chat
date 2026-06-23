@@ -1,5 +1,6 @@
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { type AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import { Button, FieldGroup, FieldDescription } from '@/components';
 import { useVerifyEmailMutation } from './hooks/use-verify-email-mutation';
@@ -27,7 +28,9 @@ export const VerifyEmailForm = () => {
       });
     },
     onError: (err: Error) => {
-      toast.error(err.message, { theme: 'colored' });
+      const axiosErr = err as AxiosError<{ message?: string }>;
+      const message = axiosErr.response?.data?.message ?? err.message;
+      toast.error(message, { theme: 'colored' });
     },
   });
 
