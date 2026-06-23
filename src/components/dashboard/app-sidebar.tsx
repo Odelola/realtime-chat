@@ -8,6 +8,7 @@ SidebarMenuItem,
 SidebarMenuButton,
 SidebarHeader
 } from "@/components/ui/sidebar"
+import {useMyGuildsQuery} from "@/features/guild/hooks/use-guilds-query"
 
 import{
   Hash,
@@ -16,8 +17,20 @@ import{
 } from "lucide-react"
 import CreateGuildModal from "@/features/guild/guild-modal/create-guild-modal"
 import { useState } from "react"
+import { useGuildChannelsQuery } from "@/features/channels/hooks/use-channels-query"
+import CreateChannelModal from "@/features/channels/channel-modal/create-channel-modal";
+import JoinGuildModal from "@/features/guild/guild-modal/join-guild-modal";
 export default function AppSidebar() {
   const[showCreateGuild, setShowCreateGuild] = useState(false)
+  const [selectedGuildId, setSelectedGuildId] = useState<string>();
+  const { data: guilds, isLoading } = useMyGuildsQuery();
+  const { data: channels } =
+  useGuildChannelsQuery(selectedGuildId ?? "");
+  //  console.log(channels)
+  // console.log("Selected Guild:", selectedGuildId);
+  const [showCreateChannel, setShowCreateChannel] = useState(false);
+  const [showJoinGuild,setShowJoinGuild] = useState(false);
+ 
   return(
      <Sidebar
   collapsible="none"
@@ -43,41 +56,92 @@ export default function AppSidebar() {
   >
     Create Guild
   </button>
+
+  <button
+  onClick={() => setShowJoinGuild(true)}
+  className="mt-2 px-3 py-2 text-xs bg-indigo-600 text-white rounded-md"
+>
+  Join Guild
+</button>
 </div>
      </SidebarHeader>
      <SidebarContent className="bg-[#0B0B14]">
       <SidebarGroup>
-        <p className="px-2 mb-1 md:text-xs text-[10px]text-gray-500">CHANNELS</p>
-        <SidebarGroupContent>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton className="text-white py-2 bg-white/5">
-                <Hash size={16}/>
-                <span className="truncate">general</span>
+  <p className="px-2 mb-2 text-xs text-gray-500">
+    GUILDS
+  </p>
 
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+  <SidebarGroupContent>
+    <SidebarMenu>
+      {isLoading ? (
+        <p className="px-2 text-sm text-gray-400">
+          Loading...
+        </p>
+      ) : guilds?.length ? (
+        guilds.map((guild) => (
+          <SidebarMenuItem key={guild.id}>
+            <SidebarMenuButton className="text-white hover:bg-white/5 hover:text-white" onClick={() => setSelectedGuildId(guild.id)}>
+              <Users size={16} />
 
-              <SidebarMenuItem>
-              <SidebarMenuButton className="text-white bg-white/5">
-                <Hash size={16}/>
-                <span className="truncate">design</span>
+              <span className="truncate">
+                {guild.name}
+              </span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        ))
+      ) : (
+        <div className="px-2 py-4 text-center">
+          <p className="text-sm text-gray-500">
+            No guilds yet
+          </p>
 
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+          <button
+            onClick={() => setShowCreateGuild(true)}
+            className="mt-2 text-xs text-indigo-400 hover:text-indigo-300"
+          >
+            Create your first guild
+          </button>
+        </div>
+      )}
+    </SidebarMenu>
+  </SidebarGroupContent>
+</SidebarGroup>
+{selectedGuildId &&  (
+  <SidebarGroup>
+  <div className="flex items-center justify-between px-2 mt-4 mb-2">
+      <p className="text-xs text-gray-500">
+        CHANNELS
+      </p>
 
-              <SidebarMenuItem>
-              <SidebarMenuButton className="text-white bg-white/5">
-                <Hash size={16}/>
-                <span className="truncate">dev-team</span>
-
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              </SidebarMenu>
-        </SidebarGroupContent>
-        </SidebarGroup>
-        
+      <button
+        onClick={() => setShowCreateChannel(true)}
+        className="text-indigo-400 text-xs"
+      >
+        +
+      </button>
+    </div>
+  <SidebarGroupContent>
+   <SidebarMenu>
+  {channels?.length ? (
+    channels.map((channel) => (
+      <SidebarMenuItem key={channel.id}>
+        <SidebarMenuButton className="text-white">
+          <Hash size={16} />
+          <span>{channel.name}</span>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    ))
+  ) : (
+    <div className="px-2 py-2">
+      <p className="text-xs text-gray-500">
+        No channels yet
+      </p>
+    </div>
+  )}
+</SidebarMenu>
+  </SidebarGroupContent>
+</SidebarGroup>
+)}
         <SidebarGroup>
           <p className="px-2 mt-6 mb-2 text-xs text-gray-500 hidden lg:inline">DIRECT MESSAGES</p>
           <SidebarGroupContent>
@@ -104,6 +168,18 @@ export default function AppSidebar() {
      <CreateGuildModal
   isOpen={showCreateGuild}
   onClose={() => setShowCreateGuild(false)}
+  
+/>
+<CreateChannelModal
+  isOpen={showCreateChannel}
+  onClose={() => setShowCreateChannel(false)}
+  guildId={selectedGuildId!}
+/>
+
+<JoinGuildModal
+  isOpen={showJoinGuild}
+  onClose={() => setShowJoinGuild(false)}
+  onGuildJoined={(guildId) => setSelectedGuildId(guildId)}
 />
      </Sidebar>
   )
