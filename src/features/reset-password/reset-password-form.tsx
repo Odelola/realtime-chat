@@ -57,7 +57,7 @@ export const ResetPasswordForm = () => {
   };
 
   return (
-    <div className="w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
+    <div className="auth-input-dark w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
       <div className="mb-6 text-center">
         <div className="flex justify-center mb-3">
           <ShieldCheckIcon className="text-[#9FA7FF] w-10 h-10" />

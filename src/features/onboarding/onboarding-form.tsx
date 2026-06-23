@@ -72,7 +72,7 @@ export const OnboardingForm = () => {
   };
 
   return (
-    <Card className="bg-[#2A2833]/50 w-120 border border-[#2A2833]">
+    <Card className="onboarding-input-dark bg-[#2A2833]/50 w-120 border border-[#2A2833]">
       <CardHeader className="text-center pt-2.5 pb-2">
         <CardTitle className="text-white font-bold text-3xl mb-2">
           Welcome to Nexus Slate

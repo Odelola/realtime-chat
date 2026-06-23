@@ -136,3 +136,21 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.auth-input-dark input:-webkit-autofill,
+.auth-input-dark input:-webkit-autofill:hover,
+.auth-input-dark input:-webkit-autofill:focus,
+.auth-input-dark input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #000 inset !important;
+  box-shadow: 0 0 0 1000px #000 inset !important;
+  -webkit-text-fill-color: #ABAAAE !important;
+}
+
+.onboarding-input-dark input:-webkit-autofill,
+.onboarding-input-dark input:-webkit-autofill:hover,
+.onboarding-input-dark input:-webkit-autofill:focus,
+.onboarding-input-dark input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #0D0D12 inset !important;
+  box-shadow: 0 0 0 1000px #0D0D12 inset !important;
+  -webkit-text-fill-color: #fff !important;
+}

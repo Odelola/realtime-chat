@@ -72,7 +72,7 @@ export const SignupForm = () => {
   };
 
   return (
-    <div className="w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
+    <div className="auth-input-dark w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
       <form onSubmit={form.handleSubmit(onSubmit)} method="POST">
         <FieldGroup>
           <div className="space-y-6 mb-6">
