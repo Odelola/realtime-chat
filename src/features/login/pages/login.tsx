@@ -2,9 +2,9 @@ import { LoginForm } from '@/features/login/login-form';
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen w-full py-8 bg-[#0D0E11] flex flex-col items-center justify-between">
-      <div className="flex flex-col items-center w-full">
-        <header>
+    <div className="min-h-screen w-full bg-gradient-to-b from-[#0D0E11] via-[#0D0E11] to-[#1a1d2e] flex flex-col items-center justify-center pt-16">
+      <div className="flex flex-col items-center w-full flex-1 justify-center">
+        <header className="mb-12">
           <figure className="flex flex-col items-center">
             <img src="/images/logo.svg" alt="" />
             <figcaption className="contents">
@@ -16,7 +16,7 @@ export default function LoginPage() {
         </header>
         <LoginForm />
       </div>
-      <footer className="flex flex-col items-center gap-3 pb-4">
+      <footer className="flex flex-col items-center gap-3 pb-8 mt-16">
         <nav className="flex gap-4">
           <a
             href="#"
