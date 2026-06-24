@@ -105,13 +105,8 @@ function logStateChange<T extends Record<string, unknown>>({
     console.group(`%c${title}`, `color: ${config.colors?.title}`);
   }
 
-  console.log(`%cprev state`, `color: ${config.colors?.prevState}`, prevState);
-  console.log(`%caction`, `color: ${config.colors?.action}`, action);
-  console.log(`%cnext state`, `color: ${config.colors?.nextState}`, nextState);
-
   if (config.diff) {
     const changes = diff(prevState, nextState);
-    console.log(`%cdiff`, `color: ${config.colors?.action}`, changes);
   }
 
   console.groupEnd();

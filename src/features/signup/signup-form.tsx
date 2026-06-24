@@ -72,10 +72,10 @@ export const SignupForm = () => {
   };
 
   return (
-    <div className="auth-input-dark w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
+    <div className="w-full h-full max-w-md px-8 py-12 rounded-xl bg-black/30 backdrop-blur-sm">
       <form onSubmit={form.handleSubmit(onSubmit)} method="POST">
-        <FieldGroup>
-          <div className="space-y-6 mb-6">
+        <FieldGroup className="space-y-0">
+          <div className="space-y-5 mb-2">
             <Controller
               name="fullName"
               control={form.control}
@@ -87,12 +87,12 @@ export const SignupForm = () => {
                   >
                     Full name
                   </FieldLabel>
-                  <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
+                  <InputGroup className="bg-transparent rounded-lg px-2 py-5 border border-[#333333]">
                     <InputGroupInput
                       {...field}
                       id={field.name}
                       placeholder="Alex Obsidian"
-                      className="text-[#ABAAAE]"
+                      className="text-[#a0a0a0] placeholder-[#707070] text-sm leading-relaxed"
                       aria-invalid={fieldState.invalid}
                     />
                     <InputGroupAddon align="inline-start">
@@ -116,7 +116,7 @@ export const SignupForm = () => {
                   >
                     Email address
                   </FieldLabel>
-                  <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
+                  <InputGroup className="bg-transparent rounded-lg px-2 py-5 border border-[#333333]">
                     <InputGroupInput
                       {...field}
                       id={field.name}
@@ -146,14 +146,14 @@ export const SignupForm = () => {
                   >
                     Username
                   </FieldLabel>
-                  <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
+                  <InputGroup className="bg-transparent rounded-lg px-2 py-5 border border-[#333333]">
                     <InputGroupInput
                       {...field}
                       id={field.name}
                       placeholder="alexobsidian"
                       className="text-[#ABAAAE]"
                       aria-invalid={fieldState.invalid}
-                    />
+                      />
                     <InputGroupAddon align="inline-start">
                       <UserIcon className="text-[#ABAAAE]" />
                     </InputGroupAddon>
@@ -163,7 +163,7 @@ export const SignupForm = () => {
                   )}
                 </Field>
               )}
-            />
+              />
             <Controller
               name="password"
               control={form.control}
@@ -172,13 +172,14 @@ export const SignupForm = () => {
                   <FieldLabel
                     htmlFor={field.name}
                     className="uppercase text-[#ABAAAE] font-medium text-xs tracking-[1.2px]"
-                  >
+                    >
                     Password
                   </FieldLabel>
-                  <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
+                  <InputGroup className="bg-transparent rounded-lg px-2 py-5 border border-[#333333]">
                     <InputGroupInput
                       {...field}
                       id={field.name}
+                      placeholder="Password"
                       type={showPassword ? 'text' : 'password'}
                       aria-invalid={fieldState.invalid}
                       className="text-[#ABAAAE]"
@@ -204,11 +205,11 @@ export const SignupForm = () => {
               )}
             />
           </div>
-          <Field className="mb-2">
+          <Field className="mb-6">
             <Button
               type="submit"
               disabled={mutation.isPending}
-              className="cursor-pointer rounded-full py-5 bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
+              className="cursor-pointer rounded-full p-8  w-full bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] text-base font-medium shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
             >
               {mutation.isPending ? 'Creating account…' : 'Create Account'}
             </Button>
@@ -216,11 +217,11 @@ export const SignupForm = () => {
           <FieldSeparator className="*:data-[slot=field-separator-content]:bg-[#121316] uppercase">
             Or continue with
           </FieldSeparator>
-          <Field className="my-4 gap-4 md:flex-row">
+          <Field className="my-6 gap-3 md:flex-row">
             <Button
               variant="outline"
               type="button"
-              className="group cursor-pointer py-5 bg-[#24262A] text-[#F1F0F4] rounded-md md:basis-1/2"
+              className="group cursor-pointer p-6 bg-[#24262A] text-[#b0b0b0] rounded-lg border-none text-sm md:basis-1/2"
             >
               <img src="/images/google.svg" alt="Google icon" className="group-hover:invert" />
               Google
@@ -228,7 +229,7 @@ export const SignupForm = () => {
             <Button
               variant="outline"
               type="button"
-              className="group cursor-pointer py-5 bg-[#24262A] text-[#F1F0F4] rounded-md md:basis-1/2"
+              className="group cursor-pointer p-6 bg-[#24262A] text-[#b0b0b0] rounded-lg border-none text-sm md:basis-1/2"
             >
               <img src="/images/github.svg" alt="GitHub icon" className="group-hover:invert" />
               GitHub

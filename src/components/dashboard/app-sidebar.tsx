@@ -26,8 +26,6 @@ export default function AppSidebar() {
   const { data: guilds, isLoading } = useMyGuildsQuery();
   const { data: channels } =
   useGuildChannelsQuery(selectedGuildId ?? "");
-  //  console.log(channels)
-  // console.log("Selected Guild:", selectedGuildId);
   const [showCreateChannel, setShowCreateChannel] = useState(false);
   const [showJoinGuild,setShowJoinGuild] = useState(false);
  

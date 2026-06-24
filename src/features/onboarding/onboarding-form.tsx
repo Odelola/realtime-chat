@@ -202,7 +202,7 @@ export const OnboardingForm = () => {
       </ScrollArea>
       <CardFooter className="flex justify-between bg-[#0D0D12]/50 border-[#2A2833]">
         <Button variant="link" className="text-[#7C7296] cursor-pointer" asChild>
-          <Link to="/chat-layout">Skip for now</Link>
+          <Link to="/chat">Skip for now</Link>
         </Button>
         <Button
           type="submit"

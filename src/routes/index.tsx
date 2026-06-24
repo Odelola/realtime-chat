@@ -96,7 +96,7 @@ const Router = () => (
         }
       />
       <Route
-      path='/chat-layout'
+      path='/chat'
       element={
       <PrivateRoute>
         <SidebarProvider>

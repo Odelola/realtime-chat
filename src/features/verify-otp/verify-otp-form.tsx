@@ -25,6 +25,9 @@ import * as yup from 'yup';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { useState, useEffect } from 'react';
 
+
+const InputOTPSlotClassName = "size-14 w-full  flex-1 text-lg text-[#ABAAAE]";
+
 export const VerifyOTPForm = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -60,7 +63,7 @@ export const VerifyOTPForm = () => {
       setTokens(data.accessToken, data.refreshToken);
       setIsAuthenticated(true);
       localStorage.removeItem('pendingOTPEmail');
-      navigate('/chat-layout');
+      navigate('/chat');
     },
     onError: (err) => {
       const axiosErr = err as AxiosError<{ message?: string }>;
@@ -89,9 +92,10 @@ export const VerifyOTPForm = () => {
                   >
                     One-Time Password
                   </FieldLabel>
-                  <div className="flex justify-start py-2 [--foreground:0_0%_100%]">
+                  <div className="flex justify-start py-2 [--foreground:0_0%_100%] w-full">
                     <InputOTP
                       {...field}
+                      containerClassName='w-full'
                       id={field.name}
                       maxLength={6}
                       pattern={REGEXP_ONLY_DIGITS}
@@ -100,13 +104,15 @@ export const VerifyOTPForm = () => {
                       autoFocus
                       onComplete={form.handleSubmit(onSubmit)}
                     >
-                      <InputOTPGroup>
-                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={0} />
-                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={1} />
-                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={2} />
-                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={3} />
-                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={4} />
-                        <InputOTPSlot className="size-14 text-lg text-[#ABAAAE]" index={5} />
+                      <InputOTPGroup
+                        className='w-full'
+                      >
+                        <InputOTPSlot className={InputOTPSlotClassName} index={0} />
+                        <InputOTPSlot className={InputOTPSlotClassName} index={1} />
+                        <InputOTPSlot className={InputOTPSlotClassName} index={2} />
+                        <InputOTPSlot className={InputOTPSlotClassName} index={3} />
+                        <InputOTPSlot className={InputOTPSlotClassName} index={4} />
+                        <InputOTPSlot className={InputOTPSlotClassName} index={5} />
                       </InputOTPGroup>
                     </InputOTP>
                   </div>
