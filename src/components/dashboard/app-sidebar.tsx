@@ -20,6 +20,7 @@ import { useState } from "react"
 import { useGuildChannelsQuery } from "@/features/channels/hooks/use-channels-query"
 import CreateChannelModal from "@/features/channels/channel-modal/create-channel-modal";
 import JoinGuildModal from "@/features/guild/guild-modal/join-guild-modal";
+import useChatStore from "@/store/chat-store";
 export default function AppSidebar() {
   const[showCreateGuild, setShowCreateGuild] = useState(false)
   const [selectedGuildId, setSelectedGuildId] = useState<string>();
@@ -28,6 +29,7 @@ export default function AppSidebar() {
   useGuildChannelsQuery(selectedGuildId ?? "");
   const [showCreateChannel, setShowCreateChannel] = useState(false);
   const [showJoinGuild,setShowJoinGuild] = useState(false);
+  const { selectedChannelId, setSelectedChannelId } = useChatStore();
  
   return(
      <Sidebar
@@ -123,7 +125,10 @@ export default function AppSidebar() {
   {channels?.length ? (
     channels.map((channel) => (
       <SidebarMenuItem key={channel.id}>
-        <SidebarMenuButton className="text-white">
+        <SidebarMenuButton
+          className={`text-white ${selectedChannelId === channel.id ? 'bg-white/10' : ''}`}
+          onClick={() => setSelectedChannelId(channel.id)}
+        >
           <Hash size={16} />
           <span>{channel.name}</span>
         </SidebarMenuButton>
