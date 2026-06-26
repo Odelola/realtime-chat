@@ -57,7 +57,7 @@ export const ResetPasswordForm = () => {
   };
 
   return (
-    <div className="auth-input-dark w-[90%] bg-[#121316] my-8 p-8 rounded-md max-w-xl">
+    <div className="w-full h-full max-w-md px-8 py-12 rounded-xl bg-black/30 backdrop-blur-sm">
       <div className="mb-6 text-center">
         <div className="flex justify-center mb-3">
           <ShieldCheckIcon className="text-[#9FA7FF] w-10 h-10" />
@@ -72,8 +72,8 @@ export const ResetPasswordForm = () => {
         </p>
       </div>
       <form onSubmit={form.handleSubmit(onSubmit)} method="POST">
-        <FieldGroup>
-          <div className="space-y-6 mb-4">
+        <FieldGroup className="space-y-0">
+          <div className="space-y-5 mb-2">
             <Controller
               name="newPassword"
               control={form.control}
@@ -85,13 +85,13 @@ export const ResetPasswordForm = () => {
                   >
                     New password
                   </FieldLabel>
-                  <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
+                  <InputGroup className="bg-transparent rounded-lg px-2 py-5 border border-[#333333]">
                     <InputGroupInput
                       {...field}
                       id={field.name}
                       type={showPassword ? 'text' : 'password'}
                       aria-invalid={fieldState.invalid}
-                      className="text-[#ABAAAE]"
+                      className="text-[#a0a0a0] text-sm leading-relaxed"
                     />
                     <InputGroupAddon align="inline-start">
                       <LockIcon className="text-[#ABAAAE]" />
@@ -124,7 +124,7 @@ export const ResetPasswordForm = () => {
                   >
                     Confirm new password
                   </FieldLabel>
-                  <InputGroup className="bg-black rounded-lg px-3 py-4 border-[#ABAAAE]">
+                  <InputGroup className="bg-black rounded-lg px-2 py-5 border-[#ABAAAE]">
                     <InputGroupInput
                       {...field}
                       id={field.name}
@@ -153,11 +153,11 @@ export const ResetPasswordForm = () => {
               )}
             />
           </div>
-          <Field>
+          <Field className="mb-6">
             <Button
               type="submit"
               disabled={mutation.isPending}
-              className="mb-6 cursor-pointer rounded-full py-5 bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
+              className="cursor-pointer rounded-full p-8  w-full bg-linear-to-r from-[#9FA7FF] to-[#8E98FF] text-[#000C9F] text-base font-medium shadow-[0px_10px_15px_-3px_rgba(159,167,255,0.1),0px_4px_6px_-4px_rgba(159,167,255,0.1)]"
             >
               {mutation.isPending ? 'Resetting…' : 'Reset Password'}
             </Button>
