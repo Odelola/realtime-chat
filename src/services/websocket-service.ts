@@ -5,13 +5,13 @@ let stompClient: Client | null = null;
 let connectPromise: Promise<Client> | null = null;
 
 export function connect(token: string): Promise<Client> {
-  // Return existing connection promise if already connecting
+  /******==========  Return existing connection promise if already connecting ==============*******/
   if (connectPromise) {
     return connectPromise;
   }
 
   connectPromise = new Promise((resolve, reject) => {
-    // Remove quotes if they exist
+    /******==========  Remove quotes if they exist ==============*******/ 
     let cleanToken = token;
     if (cleanToken.startsWith(`"`)) {
       cleanToken = cleanToken.slice(1, -1);
@@ -31,12 +31,12 @@ export function connect(token: string): Promise<Client> {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        console.log('✅ STOMP connected');
+        console.log('STOMP connected');
         connectPromise = null;
         resolve(stompClient!);
       },
       onStompError: (frame) => {
-        console.error('❌ STOMP error:', frame.headers['message']);
+        console.error('STOMP error:', frame.headers['message']);
         connectPromise = null;
         reject(new Error(frame.headers['message']));
       },
