@@ -18,25 +18,27 @@ export default function Header() {
 
           {/* Logo + Menu */}
           <div className="flex items-center gap-8">
-            <a href="#" className="text-white text-2xl md:text-3xl font-semibold">
+            <a href="#" className="text-white text-2xl md:text-3xl font-semibold flex gap-x-3 items-center">
+              <img src="/images/logo.svg" alt="NexusSlate Logo" />
+
               Nexus Slate
             </a>
 
-          
-            <div className="hidden md:flex items-center space-x-6">
+
+            {/* <div className="hidden md:flex items-center space-x-6">
               <a className="text-gray-300 hover:text-blue-500">Features</a>
               <a className="text-gray-300 hover:text-blue-500">Solutions</a>
               <a className="text-gray-300 hover:text-blue-500">Security</a>
               <a className="text-gray-300 hover:text-blue-500">Enterprise</a>
-            </div>
+            </div> */}
           </div>
 
-          
+
           <div className="hidden md:flex items-center space-x-3">
             {!isAuthenticated ? (
               <>
-                <Button onClick={() => navigate(APP_ROUTES.LOGIN)}>Log in</Button>
-                <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2" onClick={() => navigate(APP_ROUTES.SIGNUP)}>
+                <Button  className=" p-6" onClick={() => navigate(APP_ROUTES.LOGIN)}>Log in</Button>
+                <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white p-6" onClick={() => navigate(APP_ROUTES.SIGNUP)}>
                   Get Started
                 </Button>
               </>
@@ -49,9 +51,9 @@ export default function Header() {
 
           {/* Hamburger */}
           <div className="md:hidden flex items-center">
-           <button onClick={() => setIsOpen(!isOpen)}>
-  {isOpen ? <X className="w-6 h-6 text-gray-300" /> : <Menu className="w-6 h-6 text-gray-300" />}
-</button>
+            <button onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? <X className="w-6 h-6 text-gray-300" /> : <Menu className="w-6 h-6 text-gray-300" />}
+            </button>
           </div>
         </div>
       </div>
