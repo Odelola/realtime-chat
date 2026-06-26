@@ -38,7 +38,7 @@ export default function SignupPage() {
           </a>
         </nav>
         <p className="text-[#ABAAAE] uppercase text-[0.625rem] tracking-[1.2px]">
-          &copy; 2026 Nexus Slate. All rights reserved.
+          &copy; {new Date().getFullYear()} Nexus Slate. All rights reserved.
         </p>
       </footer>
     </div>

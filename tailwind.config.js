@@ -2,7 +2,12 @@
 module.exports = {
   content: ['./src/**/*.tsx'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        manrope: ['Manrope', 'sans-serif'],
+        // heading: ['Manrope', 'sans-serif'],
+      }
+    },
   },
   plugins: [],
 };

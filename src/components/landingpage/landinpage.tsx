@@ -38,9 +38,9 @@ const LandingPage = () => {
     <div className="bg-gray-800 w-full h-max-content">
       <Header />
       <div className="flex flex-col items-center justify-center text-center px-4 md:px-8 lg:px-16 py-16 bg-gradient-to-b from-black via-gray-900 to-black">
-        <span className="text-sm md:text-base text-gray-300 border border-gray-700 rounded-full px-4 py-1 mb-6">
+        {/* <span className="text-sm md:text-base text-gray-300 border border-gray-700 rounded-full px-4 py-1 mb-6">
           Nexus Slate 2.0 is now in beta
-        </span>
+        </span> */}
 
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
           Engineered for Focus.
@@ -60,8 +60,8 @@ const LandingPage = () => {
             Start building for free
           </Button>
 
-          <Button className="bg-gray-800 text-gray-300 px-3 py-6 rounded-md border border-gray-700 w-full sm:w-auto">
-            Book a demo
+          <Button className="bg-gray-800 text-gray-300 px-3 py-6 rounded-md border border-gray-700 w-full sm:w-auto" >
+            <a href="mailto:contact@nexusslate.vercel.app">Book a demo</a>
           </Button>
         </div>
 
@@ -207,7 +207,7 @@ const LandingPage = () => {
             </p>
           </aside>
 
-          <aside className="grid grid-cols-2 sm:grid-cols-3 gap-10 text-gray-300 font-bold">
+          {/* <aside className="grid grid-cols-2 sm:grid-cols-3 gap-10 text-gray-300 font-bold">
             <div>
               <h2 className="text-lg font-bold mb-4">Product</h2>
               <ul className="flex flex-col gap-3 text-sm md:text-base">
@@ -239,12 +239,12 @@ const LandingPage = () => {
                 <li>Security</li>
               </ul>
             </div>
-          </aside>
+          </aside> */}
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between w-full p-6 md:p-10 gap-4 text-center md:text-left">
           <span className="text-gray-300 text-sm">
-            © 2024 Nexus Slate Inc. All rights reserved.
+            © {new Date().getFullYear()} Nexus Slate Inc. All rights reserved.
           </span>
 
           <ul className="flex flex-wrap justify-center md:justify-end gap-4 md:gap-6 text-sm text-gray-300">
