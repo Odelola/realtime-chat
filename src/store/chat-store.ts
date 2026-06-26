@@ -4,16 +4,26 @@ import { logger } from './logger';
 
 type ChatState = {
   selectedChannelId: string | undefined;
-  setSelectedChannelId: (channelId: string | undefined) => void;
+  selectedChannelName: string | undefined;
+  selectedGuildId: string | undefined;
+  setSelectedChannel: (channelId: string | undefined, channelName?: string, guildId?: string) => void;
 };
 
 const useChatStore = create<ChatState>()(
   logger<ChatState>(
     (set) => ({
-      selectedChannelId: getItem('selectedChannelId'),
-      setSelectedChannelId: (channelId: string | undefined) => {
+      selectedChannelId: undefined,
+      selectedChannelName: undefined,
+      selectedGuildId: getItem('selectedGuildId'),
+      setSelectedChannel: (channelId: string | undefined, channelName?: string, guildId?: string) => {
         setItem('selectedChannelId', channelId);
-        set({ selectedChannelId: channelId });
+        setItem('selectedChannelName', channelName);
+        setItem('selectedGuildId', guildId);
+        set({
+          selectedChannelId: channelId,
+          selectedChannelName: channelName,
+          selectedGuildId: guildId,
+        });
       },
     }),
     'chatStore'

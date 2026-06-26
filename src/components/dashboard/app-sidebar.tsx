@@ -1,35 +1,49 @@
-import{
-Sidebar,
-SidebarContent,
-SidebarGroup,
-SidebarGroupContent,
-SidebarMenu,
-SidebarMenuItem,
-SidebarMenuButton,
-SidebarHeader
-} from "@/components/ui/sidebar"
-import {useMyGuildsQuery} from "@/features/guild/hooks/use-guilds-query"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarHeader,
+} from '@/components/ui/sidebar';
+import { useMyGuildsQuery } from '@/features/guild/hooks/use-guilds-query';
 
-import{
-  Hash,
- MessageSquare,
-  Users
-} from "lucide-react"
-import CreateGuildModal from "@/features/guild/guild-modal/create-guild-modal"
-import { useState } from "react"
-import { useGuildChannelsQuery } from "@/features/channels/hooks/use-channels-query"
-import CreateChannelModal from "@/features/channels/channel-modal/create-channel-modal";
-import JoinGuildModal from "@/features/guild/guild-modal/join-guild-modal";
-import useChatStore from "@/store/chat-store";
+import { Hash, MessageSquare, Users } from 'lucide-react';
+import CreateGuildModal from '@/features/guild/guild-modal/create-guild-modal';
+import { useState, useEffect } from 'react';
+import { useGuildChannelsQuery } from '@/features/channels/hooks/use-channels-query';
+import CreateChannelModal from '@/features/channels/channel-modal/create-channel-modal';
+import JoinGuildModal from '@/features/guild/guild-modal/join-guild-modal';
+import useChatStore from '@/store/chat-store';
+import { getGuildPresence, PresenceData } from '@/services/presence-api-service';
 export default function AppSidebar() {
-  const[showCreateGuild, setShowCreateGuild] = useState(false)
+  const [showCreateGuild, setShowCreateGuild] = useState(false);
   const [selectedGuildId, setSelectedGuildId] = useState<string>();
   const { data: guilds, isLoading } = useMyGuildsQuery();
-  const { data: channels } =
-  useGuildChannelsQuery(selectedGuildId ?? "");
+  const { data: channels } = useGuildChannelsQuery(selectedGuildId ?? '');
   const [showCreateChannel, setShowCreateChannel] = useState(false);
-  const [showJoinGuild,setShowJoinGuild] = useState(false);
-  const { selectedChannelId, setSelectedChannelId } = useChatStore();
+  const [showJoinGuild, setShowJoinGuild] = useState(false);
+  const { selectedChannelId, setSelectedChannel } = useChatStore();
+  const [presence, setPresence] = useState<PresenceData[]>([]);
+  const [loadingPresence, setLoadingPresence] = useState(false);
+
+  useEffect(() => {
+    if (!selectedGuildId) return;
+
+    setLoadingPresence(true);
+    getGuildPresence(selectedGuildId)
+      .then((data) => {
+        setPresence(data);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch presence:', err);
+      })
+      .finally(() => {
+        setLoadingPresence(false);
+      });
+  }, [selectedGuildId]);
  
   return(
      <Sidebar
@@ -127,7 +141,7 @@ export default function AppSidebar() {
       <SidebarMenuItem key={channel.id}>
         <SidebarMenuButton
           className={`text-white ${selectedChannelId === channel.id ? 'bg-white/10' : ''}`}
-          onClick={() => setSelectedChannelId(channel.id)}
+          onClick={() => setSelectedChannel(channel.id, channel.name, selectedGuildId)}
         >
           <Hash size={16} />
           <span>{channel.name}</span>
@@ -149,20 +163,23 @@ export default function AppSidebar() {
           <p className="px-2 mt-6 mb-2 text-xs text-gray-500 hidden lg:inline">DIRECT MESSAGES</p>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <MessageSquare size={16} className="text-blue-600" />
-                  <span className="text-xs text-gray-400  bg-white/2">Torera Solomon</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <MessageSquare size={16}className="text-blue-600"  />
-                  <span className="text-xs text-gray-400  bg-white/2">Jasmine Solomon</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
+              {loadingPresence ? (
+                <p className="px-2 text-xs text-gray-500">Loading...</p>
+              ) : presence.length > 0 ? (
+                presence.map((user) => (
+                  <SidebarMenuItem key={user.userId}>
+                    <SidebarMenuButton className="text-white hover:bg-white/5 hover:text-white">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${user.online ? 'bg-green-500' : 'bg-gray-500'}`} />
+                        <MessageSquare size={16} className="text-blue-600" />
+                      </div>
+                      <span className="text-xs text-gray-400">{user.userId}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))
+              ) : (
+                <p className="px-2 text-xs text-gray-500">No users in this guild</p>
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
