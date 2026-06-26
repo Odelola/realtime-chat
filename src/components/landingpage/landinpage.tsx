@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { EyeOff, ShieldCheck, Zap, MoveRight } from 'lucide-react';
 import BackToTop from './backToTop';
 import { useNavigate } from 'react-router-dom';
+import { APP_ROUTES } from '@/routes';
 
 const LandingPage = () => {
   type cardType = {
@@ -55,7 +56,7 @@ const LandingPage = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto justify-center items-center">
-          <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-3 py-6 rounded-md w-full sm:w-auto" onClick={() => navigate('/signup')}>
+          <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-3 py-6 rounded-md w-full sm:w-auto" onClick={() => navigate(APP_ROUTES.SIGNUP)}>
             Start building for free
           </Button>
 
@@ -186,11 +187,11 @@ const LandingPage = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-10 justify-center items-center">
-            <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white  px-3 py-6 rounded-md w-full sm:w-auto" onClick={() => navigate('/signup')}>
+            <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white  px-3 py-6 rounded-md w-full sm:w-auto" onClick={() => navigate(APP_ROUTES.SIGNUP)}>
               Get started for free
             </Button>
 
-            <Button className="bg-transparent border border-gray-700 text-gray-300  px-3 py-6 rounded-md w-full sm:w-auto hover:bg-gray-800 transition" onClick={() => navigate('/login')}>
+            <Button className="bg-transparent border border-gray-700 text-gray-300  px-3 py-6 rounded-md w-full sm:w-auto hover:bg-gray-800 transition" onClick={() => navigate(APP_ROUTES.LOGIN)}>
               Talk to teams
             </Button>
           </div>

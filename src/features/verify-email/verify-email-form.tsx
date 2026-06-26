@@ -7,6 +7,7 @@ import { useVerifyEmailMutation } from './hooks/use-verify-email-mutation';
 import { resendVerifyEmail } from './services/auth-service';
 import { MailCheckIcon, LoaderCircleIcon, XCircleIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+import { APP_ROUTES } from '@/routes';
 
 export const VerifyEmailForm = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ export const VerifyEmailForm = () => {
       queryClient.removeQueries({ queryKey: ['email'] });
       localStorage.removeItem('pendingVerificationEmail');
       toast.success('Email verified! Please log in to continue.', { theme: 'colored' });
-      navigate('/login');
+      navigate(APP_ROUTES.LOGIN);
     },
     onError: (err) => {
       toast.error(err.message, { theme: 'colored' });
@@ -122,11 +123,11 @@ export const VerifyEmailForm = () => {
           </FieldDescription>
 
           <FieldDescription className="text-center">
-            <Link to="/login" className="no-underline">
+            <Link to={APP_ROUTES.LOGIN} className="no-underline">
               <span className="text-[#ABAAAE] text-sm underline-offset-4 tracking-[1px] hover:underline hover:text-[#9FA7FF]">
                 Back to login
-              </span>   
-          
+              </span>
+
             </Link>
           </FieldDescription>
         </div>

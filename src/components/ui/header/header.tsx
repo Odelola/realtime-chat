@@ -3,6 +3,7 @@ import { Button } from '@/components';
 import useAuthStore from '@/store/auth-store';
 import { Menu, X } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
+import { APP_ROUTES } from '@/routes';
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,8 +35,8 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-3">
             {!isAuthenticated ? (
               <>
-                <Button onClick={() => navigate('/login')}>Log in</Button>
-                <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2" onClick={() => navigate('/signup')}>
+                <Button onClick={() => navigate(APP_ROUTES.LOGIN)}>Log in</Button>
+                <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2" onClick={() => navigate(APP_ROUTES.SIGNUP)}>
                   Get Started
                 </Button>
               </>
@@ -67,8 +68,8 @@ export default function Header() {
           <div className="pt-4 border-t border-gray-800">
             {!isAuthenticated ? (
               <div className="flex flex-col gap-3">
-                <Button onClick={() => navigate('/login')}>Log in</Button>
-                <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white" onClick={() => navigate('/signup')}>
+                <Button onClick={() => navigate(APP_ROUTES.LOGIN)}>Log in</Button>
+                <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white" onClick={() => navigate(APP_ROUTES.SIGNUP)}>
                   Get Started
                 </Button>
               </div>

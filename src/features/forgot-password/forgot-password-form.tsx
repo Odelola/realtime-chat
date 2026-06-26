@@ -20,6 +20,7 @@ import { useForgotPasswordMutation } from './hooks/use-forgot-password-mutation'
 import { MailIcon } from 'lucide-react';
 
 import * as yup from 'yup';
+import { APP_ROUTES } from '@/routes';
 
 export const ForgotPasswordForm = () => {
   const form = useForm<yup.InferType<typeof forgotPasswordSchema>>({
@@ -91,7 +92,7 @@ export const ForgotPasswordForm = () => {
               {mutation.isPending ? 'Sending…' : 'Send Reset Link'}
             </Button>
             <FieldDescription className="text-center">
-              <Link to="/login" className="no-underline">
+              <Link to={APP_ROUTES.LOGIN} className="no-underline">
                 <span className="text-[#ABAAAE] text-sm underline-offset-4 tracking-[1px] hover:underline hover:text-[#9FA7FF]">
                   Back to login
                 </span>
