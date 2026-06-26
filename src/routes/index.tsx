@@ -88,14 +88,6 @@ const Router = () => (
         }
       />
       <Route
-        path="/articles"
-        element={
-          <PrivateRoute>
-            <Articles />
-          </PrivateRoute>
-        }
-      />
-      <Route
       path='/chat'
       element={
       <PrivateRoute>
