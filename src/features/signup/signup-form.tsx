@@ -31,6 +31,7 @@ import { useState } from 'react';
 import * as yup from 'yup';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { APP_ROUTES } from '@/routes';
 
 export const SignupForm = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ export const SignupForm = () => {
       const email = form.getValues('email');
       queryClient.setQueryData(['email'], email);
       localStorage.setItem('pendingVerificationEmail', email);
-      navigate('/verify-email');
+      navigate(APP_ROUTES.VERIFY_EMAIL);
     },
     onError: (err) => {
       const axiosErr = err as AxiosError<{ message?: string }>;
@@ -237,7 +238,7 @@ export const SignupForm = () => {
           </Field>
           <FieldDescription className="text-center">
             Already have an account?{' '}
-            <Link to="/login" className="no-underline">
+            <Link to={APP_ROUTES.LOGIN} className="no-underline">
               <span className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] no-underline hover:underline hover:text-[#9FA7FF]">
                 Log In
               </span>

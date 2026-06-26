@@ -19,6 +19,18 @@ const AuthInitializer = () => {
   return null;
 };
 
+export const APP_ROUTES = {
+  HOME: "/",
+  SIGNUP: "/signup",
+  LOGIN: "/login",
+  VERIFY_OTP: "/verify-otp",
+  VERIFY_EMAIL: "/verify-email",
+  FORGOT_PASSWORD: "/forgot-password",
+  RESET_PASSWORD: "/reset-password",
+  ONBOARDING: "/onboarding",
+  CHAT: "/chat",
+}
+
 const Router = () => (
   <BrowserRouter>
     <AuthInitializer />
@@ -32,7 +44,7 @@ const Router = () => (
         }
       />
       <Route
-        path="/signup"
+        path={APP_ROUTES.SIGNUP}
         element={
           <PublicRoute>
             <Signup />
@@ -40,55 +52,55 @@ const Router = () => (
         }
       />
       <Route
-        path="/verify-otp"
+        path={APP_ROUTES.VERIFY_OTP}
         element={
           <PublicRoute>
             <VerifyOTP />
           </PublicRoute>
         }
-      />
+        />
       <Route
-        path="/verify-email"
+        path={APP_ROUTES.VERIFY_EMAIL}
         element={
           <PublicRoute>
             <VerifyEmail />
           </PublicRoute>
         }
-      />
+        />
       <Route
-        path="/login"
+        path={APP_ROUTES.LOGIN}
         element={
           <PublicRoute>
             <Login />
           </PublicRoute>
         }
-      />
+        />
       <Route
-        path="/forgot-password"
+        path={APP_ROUTES.FORGOT_PASSWORD}
         element={
           <PublicRoute>
             <ForgotPassword />
           </PublicRoute>
         }
-      />
+        />
       <Route
-        path="/reset-password"
+        path={APP_ROUTES.RESET_PASSWORD}
         element={
           <PublicRoute>
             <ResetPassword />
           </PublicRoute>
         }
-      />
+        />
       <Route
-        path="/onboarding"
+        path={APP_ROUTES.ONBOARDING}
         element={
           <PublicRoute>
             <Onboarding />
           </PublicRoute>
         }
-      />
+        />
       <Route
-      path='/chat'
+      path={APP_ROUTES.CHAT}
       element={
       <PrivateRoute>
         <SidebarProvider>

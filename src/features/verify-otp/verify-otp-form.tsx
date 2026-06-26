@@ -24,6 +24,7 @@ import { useVerifyOTPMutation } from './hooks/use-verify-otp-mutation';
 import * as yup from 'yup';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { useState, useEffect } from 'react';
+import { APP_ROUTES } from '@/routes';
 
 
 const InputOTPSlotClassName = "size-14 w-full  flex-1 text-lg text-[#ABAAAE]";
@@ -63,7 +64,7 @@ export const VerifyOTPForm = () => {
       setTokens(data.accessToken, data.refreshToken);
       setIsAuthenticated(true);
       localStorage.removeItem('pendingOTPEmail');
-      navigate('/chat');
+      navigate(APP_ROUTES.CHAT);
     },
     onError: (err) => {
       const axiosErr = err as AxiosError<{ message?: string }>;

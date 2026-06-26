@@ -23,6 +23,7 @@ import { EyeIcon, EyeOffIcon, LockIcon, MailIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import * as yup from 'yup';
+import { APP_ROUTES } from '@/routes';
 
 export const LoginForm = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export const LoginForm = () => {
     onSuccess: (data) => {
       queryClient.setQueryData(['email'], data.email);
       localStorage.setItem('pendingOTPEmail', data.email);
-      navigate('/verify-otp');
+      navigate(APP_ROUTES.VERIFY_OTP);
     },
     onError: (err) => {
       const axiosErr = err as AxiosError<{ message?: string }>;
@@ -105,7 +106,7 @@ export const LoginForm = () => {
                       Password
                     </FieldLabel>
                     <Link
-                      to="/forgot-password"
+                      to={APP_ROUTES.FORGOT_PASSWORD}
                       className="ml-auto underline-offset-4 tracking-[1px] text-[#9FA7FF] uppercase text-[0.625em] hover:underline"
                     >
                       Forgot password?
@@ -173,7 +174,7 @@ export const LoginForm = () => {
           </Field>
           <FieldDescription className="text-center">
             Don&apos;t have an account?{' '}
-            <Link to="/signup" className="no-underline">
+            <Link to={APP_ROUTES.SIGNUP} className="no-underline">
               <span className="text-[#9FA7FF] text-sm underline-offset-4 tracking-[1px] no-underline hover:underline hover:text-[#9FA7FF]">
                 Sign up for free
               </span>

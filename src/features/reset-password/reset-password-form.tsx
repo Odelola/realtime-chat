@@ -21,6 +21,7 @@ import { EyeIcon, EyeOffIcon, LockIcon, ShieldCheckIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import * as yup from 'yup';
+import { APP_ROUTES } from '@/routes';
 
 export const ResetPasswordForm = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ export const ResetPasswordForm = () => {
       toast.success('Password reset successfully. Please log in.', {
         theme: 'colored',
       });
-      navigate('/login');
+navigate(APP_ROUTES.LOGIN)
     },
     onError: (err) => {
       const axiosErr = err as AxiosError<{ message?: string }>;
@@ -162,7 +163,7 @@ export const ResetPasswordForm = () => {
               {mutation.isPending ? 'Resetting…' : 'Reset Password'}
             </Button>
             <FieldDescription className="text-center">
-              <Link to="/login" className="no-underline">
+              <Link to={APP_ROUTES.LOGIN} className="no-underline">
                 <span className="text-[#ABAAAE] text-sm underline-offset-4 tracking-[1px] hover:underline hover:text-[#9FA7FF]">
                   Back to login
                 </span>
